@@ -1,0 +1,31 @@
+{% extends 'user_model/base.html' %}
+
+{% block content %}
+    <h2>Registered Users:</h2>
+
+    <h3>
+        {% for user in users %}
+            {{ user.username }} | {{ user.entity }} | {{ user.fullname }} | {{ user.last_login|date:'d M Y, H:i:s' }} | {{ user.u_messages.all }}
+            <br>
+        {% endfor %}
+    </h3>
+    <br>
+
+    <h2>Messages:</h2>
+    <h3>
+        {% for message in messages %}
+            {{ message.body|linebreaks }}
+            <a href="{% url 'message_detail' slug=message.slug %}">read</a>
+        {% endfor %}
+    </h3>
+    <br>
+
+    <h2>Tags:</h2>
+    <h3>
+        {% for tag in tags %}
+            {{ tag.title }} |
+            {{ tag.t_messages.all }}
+            <br>
+        {% endfor %}
+    </h3>
+{% endblock %}

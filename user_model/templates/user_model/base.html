@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+<body>
+    <h3>
+        {% if request.user.is_authenticated %}
+            <p>
+                <a href="{% url 'homepage' %}">Home</a> |
+                <a href="{% url 'logout' %}">Logout</a> |
+                <a href="{% url 'create' %}">Create</a>
+            </p>
+            <p>Hello, {{ request.user.username|upper }} </p>
+
+        {% else %}
+            <p>
+                <a href="{% url 'homepage' %}">Home</a> |
+                <a href="{% url 'usercreate' %}">Create User</a> |
+                <a href="{% url 'login' %}">Login</a>
+            </p>
+        {% endif %}
+    </h3>
+    <br><br>
+
+    {% block content %}
+        you content here
+    {% endblock %}
+
+</body>
+</html>

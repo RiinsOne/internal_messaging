@@ -1,0 +1,9 @@
+{% extends 'user_model/base.html' %}
+
+{% block content %}
+    {{ message.title }} \\
+    {{ message.date_pub|date:'d M Y, H:i:s' }}
+    <br>
+    <br>
+    {{ message.body|linebreaks }}
+{% endblock %}
