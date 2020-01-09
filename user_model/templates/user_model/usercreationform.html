@@ -1,26 +1,40 @@
 {% extends 'user_model/base.html' %}
 
 {% block content %}
-    <h2>User Creation</h2>
-    
-    <form method="post">
-        {% csrf_token %}
+    {% if request.user.is_authenticated and request.user.is_admin %}
+        <h2>User Creation</h2>
+        <form method="post">
+            {% csrf_token %}
 
-        {% for field in usercreation_form %}
+            {% for field in usercreation_form %}
             <p>
                 {{ field.label_tag }}
                 {{ field }}
 
                 {% if field.help_text %}
-                    <small style="color: grey;">{{ field.help_text }}</small>
+                <small style="color: grey;">{{ field.help_text }}</small>
                 {% endif %}
 
                 {% for error in field.errors %}
-                    <small style="color: red;">{{ error }}</small>
+                <small style="color: red;">{{ error }}</small>
                 {% endfor %}
             </p>
-        {% endfor %}
+            {% endfor %}
 
-        <button type="submit">Create</button>
-    </form>
+            <button type="submit">Create</button>
+        </form>
+    {% else %}
+        <h2>access denied</h2>
+    {% endif %}
+    <br><br>
+
+    <h3>Registered Users:</h3>
+    <h3>
+        {% for user in users %}
+            {{ user.username }} | {{ user.entity }} | {{ user.fullname }} | {{ user.last_login|date:'d M Y, H:i:s' }}
+            <br>
+        {% endfor %}
+    </h3>
+    <br>
+
 {% endblock %}

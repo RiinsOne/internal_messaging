@@ -79,6 +79,10 @@ AUTH_USER_MODEL = 'user_model.UserModel'
 WSGI_APPLICATION = 'myapp.wsgi.application'
 
 
+# SESSION_COOKIE_AGE = 3600
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 

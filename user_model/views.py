@@ -5,6 +5,8 @@ from .models import UserModel, Message, Tag
 
 from .forms import UserModelCreationForm, UserAutheticationForm, MessageForm
 
+from django.conf import settings
+
 
 def homepage(request):
     users = UserModel.objects.all()
@@ -16,6 +18,7 @@ def homepage(request):
 
 def usercreation_view(request):
     context = {}
+    users = UserModel.objects.all()
 
     if request.POST:
         form = UserModelCreationForm(request.POST)
@@ -31,6 +34,7 @@ def usercreation_view(request):
     else:  # GET request
         form = UserModelCreationForm()
         context['usercreation_form'] = form
+        context['users'] = users
 
     return render(request, 'user_model/usercreationform.html', context)
 
@@ -54,13 +58,19 @@ def login_view(request):
             password = request.POST['password']
             user = authenticate(username=username, password=password)
 
-            if user:
+            if user.is_admin:
                 login(request, user)
+                settings.SESSION_COOKIE_AGE = 360
+                return redirect('homepage')
+            else:
+                login(request, user)
+                settings.SESSION_COOKIE_AGE = 180
                 return redirect('homepage')
 
     else:
         form = UserAutheticationForm()
 
+    request.session.set_expiry(0)
     context['login_form'] = form
     return render(request, 'user_model/login.html', context)
 
@@ -69,6 +79,7 @@ def messagecreate_view(request):
     another_user = UserModel.objects.filter(username=request.user).first()
     title_info = str(another_user).upper() + ' \\\ ' + str(another_user.entity).upper()
     current_user = str(request.user).upper()
+
     if request.POST:
         form = MessageForm(request.POST)
         if form.is_valid():

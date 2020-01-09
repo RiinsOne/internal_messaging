@@ -91,11 +91,14 @@ class Message(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = gen_slug()
-        # self.title = request.user
         super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title + ', ' + self.slug
+
+    class Meta:
+        ordering = ['-date_pub']
+
 
 class Tag(models.Model):
     title = models.CharField(max_length=50, unique=True)
