@@ -4,6 +4,10 @@
     {{ message.title }} \\
     {{ message.date_pub|date:'d M Y, H:i:s' }}
     <br>
+    {% for tag in message.tags.all %}
+        {{ tag.title }}
+    {% endfor %}
+    <br>
     <br>
     {{ message.body|linebreaks }}
 {% endblock %}

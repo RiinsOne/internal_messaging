@@ -60,11 +60,11 @@ def login_view(request):
 
             if user.is_admin:
                 login(request, user)
-                settings.SESSION_COOKIE_AGE = 360
+                settings.SESSION_COOKIE_AGE = 3600
                 return redirect('homepage')
             else:
                 login(request, user)
-                settings.SESSION_COOKIE_AGE = 180
+                settings.SESSION_COOKIE_AGE = 1800
                 return redirect('homepage')
 
     else:
@@ -95,3 +95,35 @@ def messagecreate_view(request):
 def message_detail(request, slug):
     message = Message.objects.get(slug__iexact=slug)
     return render(request, 'user_model/message_detail.html', context={'message': message})
+
+
+def api_view(request):
+    messages = Message.objects.all()
+
+    api_dict = []
+
+    tmp_dict_lst = []
+
+    lst_title = []
+    for m in messages:
+        lst_title.append(m.title)
+
+    lst_tags = []
+    for m in messages:
+        tml_lst = []
+        for t in m.tags.all():
+            tml_lst.append(t.title)
+        lst_tags.append(tml_lst)
+
+    lst_body = []
+    for m in messages:
+        lst_body.append(m.body)
+
+    zipped = zip(lst_title, lst_tags, lst_body)
+    zip_lst = list(zipped)
+
+
+    # for i in range(1, 101):
+    #     api_dict[str(i)] = i
+
+    return render(request, 'user_model/api.html', context={'api_dict': zip_lst})

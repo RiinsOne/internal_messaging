@@ -84,7 +84,8 @@ def gen_slug():
 class Message(models.Model):
     title = models.CharField(max_length=150, db_index=True)
     slug = models.SlugField(max_length=150, unique=True)
-    body = models.TextField(blank=True, db_index=True)
+    # body = models.TextField(blank=True, db_index=True)
+    body = models.TextField(db_index=True)
     tags = models.ManyToManyField('Tag', related_name='t_messages')
     users = models.ManyToManyField('UserModel', related_name='u_messages')
     date_pub = models.DateTimeField(auto_now_add=True)

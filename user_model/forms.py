@@ -29,12 +29,17 @@ class UserAutheticationForm(forms.ModelForm):
 
 
 class MessageForm(forms.ModelForm):
+    # tags = forms.ModelMultipleChoiceField(
+    #     queryset=Tag.objects.all(),
+    #     widget=forms.CheckboxSelectMultiple,
+    # )
+
     class Meta:
         model = Message
-        fields = ['title', 'body', 'tags']
+        fields = ['title', 'tags', 'body']
 
         widgets = {
             'title': forms.TextInput(attrs={'readonly': 'readonly'}),
             'body': forms.Textarea(attrs={'class': 'form-control'}),
-            'tags': forms.SelectMultiple(attrs={'class': 'form-control'}),
+            'tags': forms.SelectMultiple(attrs={'class': 'form-control'})
         }

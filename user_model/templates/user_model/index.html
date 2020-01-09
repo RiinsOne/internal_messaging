@@ -5,7 +5,7 @@
 
     {% for message in messages %}
         <div>
-            <h3><a href="{% url 'message_detail' slug=message.slug %}">{{ message.title }} \\ {{ message.date_pub|date:'d M Y, H:i:s' }}</a></h3>
+            <h4><a href="{% url 'message_detail' slug=message.slug %}">{{ message.title }} \\ {{ message.date_pub|date:'d M Y, H:i:s' }}</a></h4>
             {{ message.body|linebreaks }}
         </div>
             <br>

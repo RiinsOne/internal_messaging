@@ -2,16 +2,15 @@
 <html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
     <title></title>
-    <!-- <script type="text/javascript">
-        window.setTimeout(function () {
-        location.href = "http://localhost:8000/message/1578576297/";
-    }, 5000);
-    </script> -->
 </head>
 <body>
-    <h3>
-        {% if request.user.is_authenticated and request.user.is_admin %}
+    <div class="container">
+        <h3>
+            {% if request.user.is_authenticated and request.user.is_admin %}
             <p>
                 <a href="{% url 'homepage' %}">Home</a> |
                 <a href="{% url 'logout' %}">Logout</a> |
@@ -20,26 +19,32 @@
                 <a href="{% url 'create' %}">Create Message</a>
             </p>
             <p>{{ request.user.username|upper }} </p>
-        {% elif request.user.is_authenticated %}
+            {% elif request.user.is_authenticated %}
             <p>
                 <a href="{% url 'homepage' %}">Home</a> |
                 <a href="{% url 'logout' %}">Logout</a> |
                 <a href="{% url 'create' %}">Create Message</a>
             </p>
             <p>{{ request.user.username|upper }} </p>
-        {% else %}
+            {% else %}
             <p>
                 <a href="{% url 'homepage' %}">Home</a> |
                 <a href="{% url 'login' %}">Login</a>
             </p>
-        {% endif %}
-    </h3>
-    <br><br>
+            {% endif %}
+        </h3>
+        <br><br>
 
-    {% block content %}
+        {% block content %}
         you content here
-    {% endblock %}
+        {% endblock %}
+    </div>
 
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
 </body>
 </html>
