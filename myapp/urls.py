@@ -27,5 +27,6 @@ urlpatterns = [
     path('login/', login_view, name='login'),
     path('create/', messagecreate_view, name='create'),
     path('message/<str:slug>/', message_detail, name='message_detail'),
+    # path('api/', index, name='api_detail'),
     path('api/', api_view, name='api_detail')
 ]

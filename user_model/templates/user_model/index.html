@@ -1,16 +1,23 @@
 {% extends 'user_model/base.html' %}
 
 {% block content %}
+    <div class="row">
+        <div class="col">
+            {% for message in messages %}
+            <div>
+                <h4><a href="{% url 'message_detail' slug=message.slug %}">{{ message.title }} \\ {{ message.date_pub|date:'d M Y, H:i:s' }}</a></h4>
+                {{ message.body|linebreaks }}
+            </div>
+            <br>
+            {% endfor %}
+            <br><br>
+        </div>
+        <div class="col">
+
+        </div>
+    </div>
     <h2>Messages:</h2>
 
-    {% for message in messages %}
-        <div>
-            <h4><a href="{% url 'message_detail' slug=message.slug %}">{{ message.title }} \\ {{ message.date_pub|date:'d M Y, H:i:s' }}</a></h4>
-            {{ message.body|linebreaks }}
-        </div>
-            <br>
-    {% endfor %}
-    <br><br>
 
     <h3>Tags:</h3>
     <h3>
@@ -21,3 +28,31 @@
         {% endfor %}
     </h3>
 {% endblock %}
+
+<!-- <script>
+    function getjson(){
+        $.ajax({
+            url: 'http://localhost:8000/api/',
+            dataType: 'JSON',
+            type: 'GET',
+            success: function(data){
+                console.log(data);
+                <!-- alert(data); -->
+            }
+        });
+    };
+    setInterval(getjson(), 5000);
+</script> -->
+
+<script type="text/javascript">
+    $(document).ready(function() {
+       setInterval(function(){
+            $.getJSON('/api',
+                    function (data) {
+                        console.log(data);
+                        }
+                    });
+       }, 5000);
+    });
+
+</script>

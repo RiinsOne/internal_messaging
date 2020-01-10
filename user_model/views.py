@@ -1,5 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
+import json as simplejson
+from django.http import HttpResponse
+from django.http import JsonResponse
+from django.template import RequestContext, loader
 
 from .models import UserModel, Message, Tag
 
@@ -97,12 +101,19 @@ def message_detail(request, slug):
     return render(request, 'user_model/message_detail.html', context={'message': message})
 
 
+# def index(request):
+#     return HttpResponse(loader.get_template('user_model/api.html').render(RequestContext(request,{'latest_results_list': Message.objects.all()})))
+#
+#
+# def update(request):
+#      results = [ob.as_json() for ob in Results.objects.all()]
+#      return JsonResponse({'latest_results_list':results})
+
+# https://stackoverflow.com/questions/2428092/creating-a-json-response-using-django-and-python/2428119#2428119
 def api_view(request):
     messages = Message.objects.all()
 
-    api_dict = []
-
-    tmp_dict_lst = []
+    api_dict = {}
 
     lst_title = []
     for m in messages:
@@ -119,11 +130,12 @@ def api_view(request):
     for m in messages:
         lst_body.append(m.body)
 
-    zipped = zip(lst_title, lst_tags, lst_body)
-    zip_lst = list(zipped)
+    zip_lst = list(zip(lst_title, lst_tags, lst_body))
 
+    for char in range(len(zip_lst)):
+        api_dict[char] = zip_lst[char]
 
-    # for i in range(1, 101):
-    #     api_dict[str(i)] = i
+    data = simplejson.dumps(api_dict)
 
-    return render(request, 'user_model/api.html', context={'api_dict': zip_lst})
+    # return render(request, 'user_model/api.html', context={'api_dict': api_dict})
+    return HttpResponse(data, content_type='application/json')
