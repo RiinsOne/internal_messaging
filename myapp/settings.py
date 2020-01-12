@@ -35,6 +35,9 @@ INSTALLED_APPS = [
     # 'd_messages.apps.DiMessagesConfig',
     'user_model.apps.UserModelConfig',
 
+    # rest_framework
+    'rest_framework',
+
     # django apps
     'django.contrib.admin',
     'django.contrib.auth',

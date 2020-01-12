@@ -1,0 +1,119 @@
+<div class="card mb-4 highlight-class" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title" id="title-idne">Title</h5>
+        <h6 class="card-subtitle mb-2 text-muted" id="tags-idne">Tags</h6>
+        <textarea readonly class="form-control" id="body-idne" rows="6" style="resize: none;">Body</textarea>
+        <br>
+        <button onclick="copyToClipboard('#body-idne')">copy</button>
+    </div>
+</div>
+
+{% for i in list %}
+    <div class="card mb-4" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title" id="title-id{{i}}">{{i}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted" id="tags-id{{i}}">{{i}}</h6>
+            <textarea readonly class="form-control" id="body-id{{i}}" rows="6" style="resize: none;">{{i}}</textarea>
+            <!-- <p class="card-text" id="body-id{{i}}">{{i}}</p> -->
+            <br>
+            <button onclick="copyToClipboard('#body-id{{i}}')">copy</button>
+        </div>
+    </div>
+{% endfor %}
+
+<script>
+    function getjson() {
+        $.ajax({
+            url: 'http://127.0.0.1:8000/messages/?format=json',
+            dataType: 'JSON',
+            type: 'GET',
+
+            success: function(data) {
+                // var verifySlugOne = parseInt(data[0]['slug'], 10);
+
+                // $("#body-idne").on("change", "selectorOfDynamicElements", function() {
+                //     $(".highlight-class").effect("highlight", {color:"#669966"}, 3000 );
+                // });
+
+                msgTitleNE = data[0]['title'];
+                $('#title-idne').html(msgTitleNE);
+
+                var msgTagsNE = [];
+                for (var k = 0; k <= data[0].tags.length - 1; k++) {
+                    msgTagNE = data[0].tags[k]['title'];
+                    msgTagsNE += '<span>' + msgTagNE + ' ' + '</span>';
+                };
+                $('#tags-idne').html(msgTagsNE);
+
+                msgBodyNE = data[0]['body']
+                $('#body-idne').html(msgBodyNE);
+
+                //
+
+                for (var i = 1; i <= 9; i++) {
+                    msgTitle = data[i]['title'];
+                    msgTitleId = '#title-id' + i;
+                    $(msgTitleId).html(msgTitle);
+
+                    var msgTags = [];
+                    for (var j = 0; j <= data[i].tags.length - 1; j++) {
+                        msgTag = data[i].tags[j]['title'];
+                        msgTags += '<span>' + msgTag + ' ' + '</span>';
+                    };
+                    msgTagsId = '#tags-id' + i;
+                    $(msgTagsId).html(msgTags);
+
+                    // msgBody = data[i]['body'].replace(/\n/g, "<br />");
+                    msgBody = data[i]['body']
+                    msgBodyId = '#body-id' + i;
+                    $(msgBodyId).html(msgBody);
+                };
+
+                // if (verifySlugOne == parseInt(data[1]['slug'])) {
+                //     $(".highlight-class").effect("highlight", {color:"#669966"}, 3000 );
+                // };
+                // console.log(parseInt(data[1]['slug']))
+            }
+        });
+    };
+    getjson();
+    // setInterval(getjson, 5000);
+</script>
+
+<script>
+    function copyToClipboard(element) {
+      var text = $(element).clone().find('br').prepend('\r\n').end().text()
+      element = $('<textarea>').appendTo('body').val(text).select()
+      document.execCommand('copy')
+      element.remove()
+    }
+</script>
+
+<!-- <script type = "text/javascript" language = "javascript">
+   $(document).ready(function() {
+      $("#button").click(function() {
+            $(".card-body").effect("highlight", {color:"#669966"}, 3000 );
+      });
+   });
+</script> -->
+
+<!-- <script>
+    function getjson(){
+        $.ajax({
+            url: 'http://127.0.0.1:8000/messages/?format=json',
+            dataType: 'JSON',
+            type: 'GET',
+
+            success: function(data){
+                msgTitle = data[{{ i }}]['title'];
+                msgTags = data[{{ i }}]['tags'];
+                msgBody = data[{{ i }}]['body'];
+
+                $('#msg-title{{i}}').html(msgTitle);
+                $('#msg-tags{{i}}').html(msgTags);
+                $('#msg-body{{i}}').html(msgBody);
+            }
+        });
+    };
+    setInterval(getjson, 10000);
+</script> -->

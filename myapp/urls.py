@@ -16,7 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from rest_framework.urlpatterns import format_suffix_patterns
+
 from user_model.views import *
+from user_model.message_view import *
 
 
 urlpatterns = [
@@ -27,6 +30,7 @@ urlpatterns = [
     path('login/', login_view, name='login'),
     path('create/', messagecreate_view, name='create'),
     path('message/<str:slug>/', message_detail, name='message_detail'),
-    # path('api/', index, name='api_detail'),
-    path('api/', api_view, name='api_detail')
+    path('messages/', MessageList.as_view()),
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)

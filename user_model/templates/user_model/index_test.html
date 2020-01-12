@@ -1,0 +1,117 @@
+{% extends 'user_model/base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            {% for message in messages %}
+            <div>
+                <h4><a href="{% url 'message_detail' slug=message.slug %}">{{ message.title }} \\ {{ message.date_pub|date:'d M Y, H:i:s' }}</a></h4>
+                {{ message.body|linebreaks }}
+            </div>
+            <br>
+            {% endfor %}
+            <br><br>
+        </div>
+        <div class="col">
+            <div id="title1"></div>
+            <div id="tags1"></div>
+            <div id="msg1"></div>
+            <br>
+            <div id="title2"></div>
+            <div id="tags2"></div>
+            <div id="msg2"></div>
+            <br>
+            <div id="title3"></div>
+            <div id="tags3"></div>
+            <div id="msg3"></div>
+            <!-- ul styles -->
+            <!-- <ul style='list-style-type:none'>
+                <div id="message-titles"></div>
+                <div id="message-msgs"></div>
+            </ul> -->
+        </div>
+        {% include 'user_model/includes/messages_card_template.html' %}
+    </div>
+    <h2>Messages:</h2>
+
+
+    <h3>Tags:</h3>
+    <h3>
+        {% for tag in tags %}
+            {{ tag.title }}
+            <!-- {{ tag.t_messages.all }} -->
+            <br>
+        {% endfor %}
+    </h3>
+
+    <!-- <script>
+        function getjson(){
+            $.ajax({
+                // url: 'http://s5.radioboss.fm:8380/played.html?sid=1&type=json',
+                url: 'http://127.0.0.1:8000/messages/?format=json',
+                dataType: 'JSON',
+                type: 'GET',
+
+                success: function(data){
+                    title1 = data[0]['title'];
+                    $('#title1').html(title1);
+                    title2 = data[1]['title'];
+                    $('#title2').html(title2);
+                    title3 = data[2]['title'];
+                    $('#title3').html(title3);
+
+                    tags1 = data[0]['tags'];
+                    $('#tags1').html(tags1);
+                    tags2 = data[1]['tags'];
+                    $('#tags2').html(tags2);
+                    tags3 = data[2]['tags'];
+                    $('#tags3').html(tags3);
+
+                    msg1 = data[0]['body'];
+                    $('#msg1').html(msg1);
+                    msg2 = data[1]['body'];
+                    $('#msg2').html(msg2);
+                    msg3 = data[2]['body'];
+                    $('#msg3').html(msg3);
+
+
+
+                // success: function(data){
+                //     let titles = [];
+                //     let msgs = [];
+                //     for (let i = 0; i <= 9; i++) {
+                //         titles += '<li>' + data[i]['title'] + '</li>';
+                //         msgs += '<li>' + data[i]['body'] + '</li>';
+                //     };
+                //     $('#message-titles').html(titles);
+                //     $('#message-msgs').html(msgs);
+                }
+            });
+        };
+        // getjson();
+        setInterval(getjson, 2500);
+    </script> -->
+    <!-- <script>
+        function getPlaylist(){
+            $.ajax({
+                url: 'http://s5.radioboss.fm:8380/played.html?sid=1&type=json',
+                // url: 'http://127.0.0.1:8000/api/'
+                dataType: 'JSONP',
+                type: 'GET',
+
+                success: function(data){
+                    const currentTrack = data[0]['title']
+                    $('#current-track').html(currentTrack);
+
+                    let lastTracks = [];
+                    for (let i = 0; i <= 9; i++) {
+                        lastTracks += '<li>' + data[i]['title'] + '</li>'
+                    };
+                    $('#last-tracks').html(lastTracks);
+                }
+            });
+        };
+        setInterval(getPlaylist, 3000);
+    </script> -->
+
+{% endblock %}
