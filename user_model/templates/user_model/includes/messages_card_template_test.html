@@ -22,10 +22,11 @@
 {% endfor %}
 
 <script>
-    // var getSlugIdNE = function() {
-    //     return parseInt($('#body-idne').val(), 10);
-    // };
-    var slugIdNE = parseInt($('#body-idne').val(), 10);
+    function getSlugIdNE() {
+        var slugIdNE = $('#body-idne').val();
+        return parseInt(slugIdNE, 10);
+    };
+    console.log(getSlugIdNE());
 
     function getjson() {
         $.ajax({
@@ -34,7 +35,14 @@
             type: 'GET',
 
             success: function(data) {
-                var verifiedSlug = parseInt(data[0]['slug'], 10);
+                function verifySlug() {
+                    var verifiedSlug = parseInt(data[0]['slug'], 10);
+                    return verifiedSlug
+                };
+
+                // $("#body-idne").on("change", "selectorOfDynamicElements", function() {
+                //     $(".highlight-class").effect("highlight", {color:"#669966"}, 3000 );
+                // });
 
                 msgTitleNE = data[0]['title'];
                 $('#title-idne').html(msgTitleNE);
@@ -69,30 +77,17 @@
                     $(msgBodyId).html(msgBody);
                 };
 
-                // $(document).ready(function() {
-                //     console.log($("#body-idne").val());
-                // });
                 // if (getSlugIdNE() != verifySlug()) {
-                //         $(".highlight-class").effect("highlight", {color:"#669966"}, 3000 );
-                //     };
-                console.log(slugIdNE);
-                console.log(verifiedSlug);
-                reWriteSlugIdNE(15);
-                console.log(slugIdNE);
-
-                // var slugIdNE = verifiedSlug;
+                //     $(".highlight-class").effect("highlight", {color:"#669966"}, 3000 );
+                // };
+                console.log(getSlugIdNE());
+                console.log(verifySlug());
             }
         });
     };
-
     getjson();
-    function reWriteSlugIdNE(a) {
-        slugIdNE = a;
-    };
-    // reWriteSlugIdNE();
-    // slugIdNE += 15;
-    // console.log(verifiedSlug);
-    // setInterval(getjson, 15000);
+    // setInterval(getjson, 5000);
+
 </script>
 
 <script>
@@ -103,3 +98,32 @@
       element.remove()
     }
 </script>
+
+<!-- <script type = "text/javascript" language = "javascript">
+   $(document).ready(function() {
+      $("#button").click(function() {
+            $(".card-body").effect("highlight", {color:"#669966"}, 3000 );
+      });
+   });
+</script> -->
+
+<!-- <script>
+    function getjson(){
+        $.ajax({
+            url: 'http://127.0.0.1:8000/messages/?format=json',
+            dataType: 'JSON',
+            type: 'GET',
+
+            success: function(data){
+                msgTitle = data[{{ i }}]['title'];
+                msgTags = data[{{ i }}]['tags'];
+                msgBody = data[{{ i }}]['body'];
+
+                $('#msg-title{{i}}').html(msgTitle);
+                $('#msg-tags{{i}}').html(msgTags);
+                $('#msg-body{{i}}').html(msgBody);
+            }
+        });
+    };
+    setInterval(getjson, 10000);
+</script> -->

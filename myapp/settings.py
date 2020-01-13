@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     # rest_framework
     'rest_framework',
 
+    # cors Headers,
+    'corsheaders',
+
     # django apps
     'django.contrib.admin',
     'django.contrib.auth',
@@ -48,6 +51,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -78,6 +84,11 @@ TEMPLATES = [
 
 AUTH_USER_MODEL = 'user_model.UserModel'
 
+CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ALLOW_HEADERS = (
+#         'Access-Control-Allow-Headers',
+#         'Access-Control-Allow-Credentials',
+#     )
 
 WSGI_APPLICATION = 'myapp.wsgi.application'
 
