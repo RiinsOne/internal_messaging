@@ -14,7 +14,6 @@
             <h5 class="card-title" id="title-id{{i}}">{{i}}</h5>
             <h6 class="card-subtitle mb-2 text-muted" id="tags-id{{i}}">{{i}}</h6>
             <textarea readonly class="form-control" id="body-id{{i}}" rows="6" style="resize: none;">{{i}}</textarea>
-            <!-- <p class="card-text" id="body-id{{i}}">{{i}}</p> -->
             <br>
             <button onclick="copyToClipboard('#body-id{{i}}')">copy</button>
         </div>
@@ -22,9 +21,6 @@
 {% endfor %}
 
 <script>
-    // var getSlugIdNE = function() {
-    //     return parseInt($('#body-idne').val(), 10);
-    // };
     var slugIdNE = parseInt($('#body-idne').val(), 10);
 
     function getjson() {
@@ -69,29 +65,35 @@
                     $(msgBodyId).html(msgBody);
                 };
 
-                // $(document).ready(function() {
-                //     console.log($("#body-idne").val());
-                // });
-                // if (getSlugIdNE() != verifySlug()) {
-                //         $(".highlight-class").effect("highlight", {color:"#669966"}, 3000 );
-                //     };
-                console.log(slugIdNE);
-                console.log(verifiedSlug);
-                reWriteSlugIdNE(15);
-                console.log(slugIdNE);
+                if (slugIdNE != verifiedSlug) {
+                        // $(".highlight-class").effect("highlight", {color:"#669966"}, 3000 );
+                        count(2);
+                    };
 
-                // var slugIdNE = verifiedSlug;
+                reWriteSlugIdNE(verifiedSlug);
+
             }
         });
     };
 
     getjson();
+
     function reWriteSlugIdNE(a) {
         slugIdNE = a;
     };
-    // reWriteSlugIdNE();
-    // slugIdNE += 15;
-    // console.log(verifiedSlug);
+
+    function count(num) {
+        divEffect = $(".highlight-class").effect("highlight", {color:"#eb6951"}, 4000 );
+        // bodyEffect = $('body').effect("highlight", {color:"#eb6951"}, 4000 );
+        setTimeout(function() {
+            divEffect;
+            // bodyEffect
+            if (num > 0) {
+                count(num - 1);
+            };
+        }, 3000);
+    };
+
     // setInterval(getjson, 15000);
 </script>
 

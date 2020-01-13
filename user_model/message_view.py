@@ -9,7 +9,7 @@ from .serializers import MessageSerializer
 class MessageList(APIView):
 
     def get(self, request):
-        messages = Message.objects.all()
+        messages = Message.objects.all()[0:20]
         serializer = MessageSerializer(messages, many=True)
         return Response(serializer.data)
 

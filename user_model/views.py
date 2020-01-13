@@ -14,7 +14,7 @@ from django.conf import settings
 
 def homepage(request):
     users = UserModel.objects.all()
-    messages = Message.objects.all()
+    messages = Message.objects.all()[0:30]
     tags = Tag.objects.all()
     context = {'users': users, 'messages': messages, 'tags': tags}
     lst = range(1, 10)
@@ -66,11 +66,11 @@ def login_view(request):
 
             if user.is_admin:
                 login(request, user)
-                settings.SESSION_COOKIE_AGE = 3600
+                # settings.SESSION_COOKIE_AGE = 3600
                 return redirect('homepage')
             else:
                 login(request, user)
-                settings.SESSION_COOKIE_AGE = 1800
+                # settings.SESSION_COOKIE_AGE = 1800
                 return redirect('homepage')
 
     else:
