@@ -1,0 +1,107 @@
+<div class="card mb-4 highlight-class" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title" id="title-idne">Title</h5>
+        <h6 class="card-subtitle mb-2 text-muted" id="tags-idne">Tags</h6>
+        <textarea readonly class="form-control" id="body-idne" rows="6" style="resize: none;">{% for message in messages|slice:":1" %}{{ message.slug }}{% endfor %}</textarea>
+        <br>
+        <button onclick="copyToClipboard('#body-idne')">copy</button>
+    </div>
+</div>
+
+{% for i in list %}
+    <div class="card mb-4" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title" id="title-id{{i}}">{{i}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted" id="tags-id{{i}}">{{i}}</h6>
+            <textarea readonly class="form-control" id="body-id{{i}}" rows="6" style="resize: none;">{{i}}</textarea>
+            <br>
+            <button onclick="copyToClipboard('#body-id{{i}}')">copy</button>
+        </div>
+    </div>
+{% endfor %}
+
+<script>
+    var slugIdNE = parseInt($('#body-idne').val(), 10);
+
+    function getjson() {
+        $.ajax({
+            url: 'http://127.0.0.1:8000/messages/?format=json',
+            dataType: 'JSON',
+            type: 'GET',
+
+            success: function(data) {
+                var verifiedSlug = parseInt(data[0]['slug'], 10);
+
+                msgTitleNE = data[0]['title'];
+                $('#title-idne').html(msgTitleNE);
+
+                var msgTagsNE = [];
+                for (var k = 0; k <= data[0].tags.length - 1; k++) {
+                    msgTagNE = data[0].tags[k]['title'];
+                    msgTagsNE += '<span>' + msgTagNE + ' ' + '</span>';
+                };
+                $('#tags-idne').html(msgTagsNE);
+
+                msgBodyNE = data[0]['body']
+                $('#body-idne').html(msgBodyNE);
+
+                //
+
+                for (var i = 1; i <= 9; i++) {
+                    msgTitle = data[i]['title'];
+                    msgTitleId = '#title-id' + i;
+                    $(msgTitleId).html(msgTitle);
+
+                    var msgTags = [];
+                    for (var j = 0; j <= data[i].tags.length - 1; j++) {
+                        msgTag = data[i].tags[j]['title'];
+                        msgTags += '<span>' + msgTag + ' ' + '</span>';
+                    };
+                    msgTagsId = '#tags-id' + i;
+                    $(msgTagsId).html(msgTags);
+
+                    msgBody = data[i]['body']
+                    msgBodyId = '#body-id' + i;
+                    $(msgBodyId).html(msgBody);
+                };
+
+                if (slugIdNE != verifiedSlug) {
+                        // $(".highlight-class").effect("highlight", {color:"#669966"}, 3000 );
+                        count(2);
+                    };
+
+                reWriteSlugIdNE(verifiedSlug);
+
+            }
+        });
+    };
+
+    getjson();
+
+    function reWriteSlugIdNE(a) {
+        slugIdNE = a;
+    };
+
+    function count(num) {
+        divEffect = $(".highlight-class").effect("highlight", {color:"#eb6951"}, 3000 );
+        // bodyEffect = $('body').effect("highlight", {color:"#eb6951"}, 4000 );
+        setTimeout(function() {
+            divEffect;
+            // bodyEffect
+            if (num > 0) {
+                count(num - 1);
+            };
+        }, 3000);
+    };
+
+    // setInterval(getjson, 15000);
+</script>
+
+<script>
+    function copyToClipboard(element) {
+      var text = $(element).clone().find('br').prepend('\r\n').end().text()
+      element = $('<textarea>').appendTo('body').val(text).select()
+      document.execCommand('copy')
+      element.remove()
+    }
+</script>
