@@ -8,11 +8,15 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-    <title></title>
+    <title>{% block title %}some_title{% endblock %}</title>
 </head>
 <body>
     <div class="container">
-        <h3>
+        {% block navbar %}
+            {% include 'user_model/includes/navbar.html' %}
+        {% endblock %}
+        <br><br>
+        <!-- <h3>
             {% if request.user.is_authenticated and request.user.is_admin %}
             <p>
                 <a href="{% url 'homepage' %}">Home</a> |
@@ -36,10 +40,10 @@
             </p>
             {% endif %}
         </h3>
-        <br><br>
+        <br><br> -->
 
         {% block content %}
-        you content here
+            you content here
         {% endblock %}
     </div>
 

@@ -1,15 +1,20 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 import json as simplejson
 from django.http import HttpResponse
 from django.http import JsonResponse
 from django.template import RequestContext, loader
+
+from django.views.generic import View
 
 from .models import UserModel, Message, Tag
 
 from .forms import UserModelCreationForm, UserAutheticationForm, MessageForm
 
 from django.conf import settings
+
+from .utils import *
 
 
 def homepage(request):
@@ -22,6 +27,15 @@ def homepage(request):
     context['list'] = lst
     context['slug_ne'] = slug_ne
     return render(request, 'user_model/index.html', context=context)
+
+
+# class IndexPage(ObjectCreateMessageMixin, View):
+#     form_model = MessageForm
+#     template = 'user_model/index.html'
+#     raise_exception = True
+
+    # another_user = UserModel.objects.filter(username=request.user).first()
+    # title_info = str(another_user).upper() + ' \\\ ' + str(another_user.entity).upper()
 
 
 def usercreation_view(request):

@@ -1,0 +1,41 @@
+{% extends 'user_model/base.html' %}
+
+<!-- {% block navbar %}
+    {% include 'user_model/includes/navbar.html' %}
+{% endblock %} -->
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            {% for message in messages|slice:":10" %}
+            <div>
+                <h4><a href="{% url 'message_detail' slug=message.slug %}">{{ message.title }} \\ {{ message.date_pub|date:'d M Y, H:i:s' }}</a></h4>
+                {{ message.body|linebreaks }}
+            </div>
+            <br>
+            {% endfor %}
+            <br><br>
+        </div>
+        <div class="col">
+            <!-- <form>
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Example textarea</label>
+                    <textarea readonly class="form-control" id="body-one" rows="5" style="resize: none;">
+                    </textarea>
+                    <button onclick="copyToClipboard('#body-one')">copy</button>
+                </div>
+            </form> -->
+        </div>
+        <div class="col">
+            {% include 'user_model/includes/messages_card_template.html' %}
+        </div>
+    </div>
+
+    <h3>Tags:</h3>
+    <h3>
+        {% for tag in tags %}
+            {{ tag.title }}
+            <br>
+        {% endfor %}
+    </h3>
+{% endblock %}
