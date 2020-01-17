@@ -4,9 +4,11 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Message
 from .serializers import MessageSerializer
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class MessageList(APIView):
+class MessageList(LoginRequiredMixin, APIView):
     def get(self, request):
         messages = Message.objects.all()[0:20]
         serializer = MessageSerializer(messages, many=True)
@@ -16,7 +18,7 @@ class MessageList(APIView):
         pass
 
 
-class MessageListDAH(APIView):
+class MessageListDAH(LoginRequiredMixin, APIView):
     def get(self, request):
         messages = Message.objects.filter(tags__title='DAH')[:20]
         serializer = MessageSerializer(messages, many=True)
@@ -26,7 +28,7 @@ class MessageListDAH(APIView):
         pass
 
 
-class MessageListUTG(APIView):
+class MessageListUTG(LoginRequiredMixin, APIView):
     def get(self, request):
         messages = Message.objects.filter(tags__title='UTG')[:20]
         serializer = MessageSerializer(messages, many=True)
@@ -36,7 +38,7 @@ class MessageListUTG(APIView):
         pass
 
 
-class MessageListS7(APIView):
+class MessageListS7(LoginRequiredMixin, APIView):
     def get(self, request):
         messages = Message.objects.filter(tags__title='S7')[:20]
         serializer = MessageSerializer(messages, many=True)

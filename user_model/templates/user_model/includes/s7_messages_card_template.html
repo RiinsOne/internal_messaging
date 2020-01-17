@@ -1,0 +1,75 @@
+{% load static %}
+
+{% for i in list %}
+    <div class="card mb-4 highlight-effect{{i}}" style="width: 350px;">
+        <div class="card-body">
+            <h5 class="card-title" id="title-id{{i}}"></h5>
+            <h6 class="card-subtitle mb-2 text-muted" id="tags-id{{i}}"></h6>
+            <textarea readonly class="form-control" id="body-id{{i}}" rows="6" style="resize: none;">{{ slug_ne.slug }}</textarea>
+            <br>
+            <button onclick="copyToClipboard('#body-id{{i}}')">copy</button>
+        </div>
+    </div>
+{% endfor %}
+
+<script type="text/javascript">
+    var slugIdNE = parseInt($('#body-id0').val(), 10);
+
+    function getjson() {
+        $.ajax({
+            url: 'http://127.0.0.1:8000/messages-s7/?format=json',
+            dataType: 'JSON',
+            type: 'GET',
+
+            success: function(data) {
+                var verifiedSlug = parseInt(data[0]['slug'], 10);
+
+                for (var i = 0; i <= 9; i++) {
+
+                    msgTitle = data[i]['title'];
+                    msgTitleId = '#title-id' + i;
+                    $(msgTitleId).html(msgTitle);
+
+                    var msgTags = [];
+                    for (var j = 0; j < data[i].tags.length; j++) {
+                        msgTag = data[i].tags[j]['title'];
+                        msgTags += '<span>' + msgTag + ' ' + '</span>';
+                    };
+
+                    msgTagsId = '#tags-id' + i;
+                    $(msgTagsId).html(msgTags);
+
+                    msgBody = data[i]['body']
+                    msgBodyId = '#body-id' + i;
+                    $(msgBodyId).html(msgBody);
+                };
+
+                if (slugIdNE != verifiedSlug) {
+                        count(2);
+                    };
+
+                reWriteSlugIdNE(verifiedSlug);
+            }
+        });
+    };
+
+    getjson();
+
+    function reWriteSlugIdNE(a) {
+        slugIdNE = a;
+    };
+
+    function count(num) {
+        divEffect = $(".highlight-effect0").effect("highlight", {color:"#eb6951"}, 3000 );
+        setTimeout(function() {
+            divEffect;
+            if (num > 0) {
+                count(num - 1);
+            };
+        }, 3000);
+    };
+
+    setInterval(getjson, 5000);
+</script>
+
+<script src="{% static 'js/copymessage.js' %}" charset="utf-8"></script>

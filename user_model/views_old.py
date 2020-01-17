@@ -126,16 +126,27 @@ def message_detail(request, slug):
     return render(request, 'user_model/message_detail.html', context={'message': message})
 
 
+# def dah_messages_api_view(request):
+#     slug_ne = Message.objects.all().first()
+#     context = {}
+#     lst = range(10)
+#     context['list'] = lst
+#     context['slug_ne'] = slug_ne
+#
+#     another_user = UserModel.objects.filter(username=request.user).first()
+#     title_info = str(another_user).upper() + ' \\\ ' + str(another_user.entity).upper()
+#
+#     if request.POST:
+#         form = MessageForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#     else:
+#         form = MessageForm({'title': title_info})
+#
+#     context['form'] = form
+#
+#     return render(request, 'user_model/dah_messages_api.html', context=context)
+
+
 class DAHMessageApiView(LoginRequiredMixin, ObjectMessagesApiMixin, View):
     template = 'user_model/dah_messages_api.html'
-    tag_arg = 'DAH'
-
-
-class UTGMessageApiView(LoginRequiredMixin, ObjectMessagesApiMixin, View):
-    template = 'user_model/utg_messages_api.html'
-    tag_arg = 'UTG'
-
-
-class S7MessageApiView(LoginRequiredMixin, ObjectMessagesApiMixin, View):
-    template = 'user_model/s7_messages_api.html'
-    tag_arg = 'S7'

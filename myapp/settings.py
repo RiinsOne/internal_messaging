@@ -51,6 +51,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # 'user_model.custom_middleware.AuthRequiredMiddleware',
+
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
 
@@ -62,6 +64,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# MIDDLEWARE_CLASSES = (
+#     'user_model.custom_middleware.AuthRequiredMiddleware',
+# )
 
 ROOT_URLCONF = 'myapp.urls'
 
@@ -83,6 +89,8 @@ TEMPLATES = [
 
 
 AUTH_USER_MODEL = 'user_model.UserModel'
+
+LOGIN_URL = '/login/'
 
 CORS_ORIGIN_ALLOW_ALL = True
 # CORS_ALLOW_HEADERS = (
@@ -161,3 +169,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]

@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-    <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
-    </button> -->
+    </button>
     <a class="navbar-brand" href="{% url 'homepage' %}">{{ request.user.username|upper }}</a>
 
     {% if request.user.is_authenticated and request.user.is_admin %}
@@ -24,8 +24,8 @@
                     DAH
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{% url 'usercreate' %}">Last 20 messages</a>
-                    <a class="dropdown-item" href="/admin/">Last 100 messages</a>
+                    <a class="dropdown-item" href="{% url 'dah_messages_api' %}">Last 10 messages</a>
+                    <a class="dropdown-item" href="/admin/">Last 50 messages</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -33,8 +33,8 @@
                     UTG
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{% url 'usercreate' %}">Last 20 messages</a>
-                    <a class="dropdown-item" href="/admin/">Last 100 messages</a>
+                    <a class="dropdown-item" href="{% url 'utg_messages_api' %}">Last 10 messages</a>
+                    <a class="dropdown-item" href="/admin/">Last 50 messages</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -42,8 +42,8 @@
                     S7
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{% url 'usercreate' %}">Last 20 messages</a>
-                    <a class="dropdown-item" href="/admin/">Last 100 messages</a>
+                    <a class="dropdown-item" href="{% url 's7_messages_api' %}">Last 10 messages</a>
+                    <a class="dropdown-item" href="/admin/">Last 50 messages</a>
                 </div>
             </li>
             <li class="nav-item">
