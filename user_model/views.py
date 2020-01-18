@@ -18,6 +18,8 @@ from django.conf import settings
 
 from .utils import *
 
+from socket import gethostname
+
 
 # @login_required(login_url='/login/')
 @login_required
@@ -104,8 +106,9 @@ def login_view(request):
 
 @login_required
 def messagecreate_view(request):
+    hostname = gethostname()
     another_user = UserModel.objects.filter(username=request.user).first()
-    title_info = str(another_user).upper() + ' \\\ ' + str(another_user.entity).upper()
+    title_info = str(another_user).upper() + ', ' + str(another_user.entity).upper() + ', ' + str(hostname).upper()
     current_user = str(request.user).upper()
 
     if request.POST:
@@ -117,6 +120,7 @@ def messagecreate_view(request):
         form = MessageForm({'title': title_info})
 
     context = {'message_form': form, 'current_user': current_user, 'another_user': another_user}
+    context['hostname'] = hostname
     return render(request, 'user_model/message_create.html', context)
 
 
@@ -127,15 +131,15 @@ def message_detail(request, slug):
 
 
 class DAHMessageApiView(LoginRequiredMixin, ObjectMessagesApiMixin, View):
-    template = 'user_model/dah_messages_api.html'
+    # template = 'user_model/dah_messages_api.html'
     tag_arg = 'DAH'
 
 
 class UTGMessageApiView(LoginRequiredMixin, ObjectMessagesApiMixin, View):
-    template = 'user_model/utg_messages_api.html'
+    # template = 'user_model/utg_messages_api.html'
     tag_arg = 'UTG'
 
 
 class S7MessageApiView(LoginRequiredMixin, ObjectMessagesApiMixin, View):
-    template = 'user_model/s7_messages_api.html'
+    # template = 'user_model/s7_messages_api.html'
     tag_arg = 'S7'

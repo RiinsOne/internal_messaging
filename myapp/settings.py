@@ -156,6 +156,8 @@ LANGUAGE_CODE = 'en-us'
 #     '%H:%M:%S'
 # ]
 
+# DATETIME_FORMAT = '%d %m %Y %H:%M:%S'
+
 TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True

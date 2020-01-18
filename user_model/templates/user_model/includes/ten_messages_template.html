@@ -1,13 +1,14 @@
 {% load static %}
 
 {% for i in list %}
-    <div class="card mb-4 highlight-effect{{i}}" style="width: 350px;">
+    <div class="card mb-4 highlight-effect{{i}}">
         <div class="card-body">
-            <h5 class="card-title" id="title-id{{i}}"></h5>
+            <h5 class="card-title mb-2" id="title-id{{i}}"></h5>
+            <h6 class="card-subtitle mb-2 text-muted" id="datepub-id{{i}}"></h6>
             <h6 class="card-subtitle mb-2 text-muted" id="tags-id{{i}}"></h6>
             <textarea readonly class="form-control" id="body-id{{i}}" rows="6" style="resize: none;">{{ slug_ne.slug }}</textarea>
             <br>
-            <button onclick="copyToClipboard('#body-id{{i}}')">copy</button>
+            <button class="btn btn-success btn-sm" onclick="copyToClipboard('#body-id{{i}}')">Копировать</button>
         </div>
     </div>
 {% endfor %}

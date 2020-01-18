@@ -1,5 +1,22 @@
+.message-form {
+    margin-left: 25px;
+    margin-right: 25px;
+    /* position: fixed; */
+}
 
+.message-template {
+    /* position: right; */
+    margin-left: 25px;
+    margin-right: 25px;
+}
 
+label {
+    font-weight: 600;
+}
+
+/* .card {
+    border-radius: 10px !important;
+} */
 
 
 

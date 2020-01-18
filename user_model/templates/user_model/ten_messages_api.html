@@ -4,10 +4,23 @@
     <div class="row">
         <div class="col-lg-7">
             <div class="message-form">
-                <h2>Создать сообщение:</h2>
+                <h2>Создать сообщение по рейсу:</h2>
                 <br>
                 <form method="post">
                     {% csrf_token %}
+
+                    <!-- <div class="row">
+                        <div class="col-lg-6 col-sm-6">
+                            {{ form.tags.label_tag }}
+                            {{ form.tags }}
+                        </div>
+                        <div class="col-lg-6 col-sm-6"></div>
+                    </div>
+                    <br>
+                    {{ form.body.label_tag }}
+                    {{ form.body }} -->
+
+                    <!-- {{ form }} -->
 
                     {% for field in form %}
                     <p>
@@ -15,7 +28,8 @@
                         {{ field }}
                     </p>
                     {% endfor %}
-                    <button type="submit">Create</button>
+                    <br>
+                    <button type="submit" class="btn btn-primary" style="padding-left: 20px; padding-right: 20px">Отправить</button>
                 </form>
                 <br><br>
             </div>

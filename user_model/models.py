@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.utils.text import slugify
 from time import time
 from django.shortcuts import render
+from socket import gethostname
 
 
 class UserModelManager(BaseUserManager):
@@ -80,6 +81,9 @@ class UserModel(AbstractBaseUser):
 def gen_slug():
     return str(int(time()))
 
+# def gen_strftime(date):
+#     return date.strftime("%d.%m.%Y %H:%M:%S")
+
 
 class Message(models.Model):
     title = models.CharField(max_length=150, db_index=True)
@@ -92,10 +96,12 @@ class Message(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = gen_slug()
+        # self.date_pub = gen_strftime(self.date_pub)
+        # self.date_pub = str(self.date_pub.datetime.strftime("%d.%m.%Y %H:%M:%S"))
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.title + ', ' + self.slug
+        return self.title + ', ' + self.date_pub.strftime("%d.%m.%Y %H:%M:%S")
 
     class Meta:
         ordering = ['-date_pub']

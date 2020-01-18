@@ -14,11 +14,16 @@ class UserModelCreationForm(UserCreationForm):
 
 
 class UserAutheticationForm(forms.ModelForm):
-    password = forms.CharField(label='Password', widget=forms.PasswordInput)
+    # password = forms.CharField(label='Password', widget=forms.PasswordInput)
 
     class Meta:
         model = UserModel
         fields = ('username', 'password')
+
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control col-lg-4 col-sm-6 col-8 justify-content-center'}),
+            'password': forms.PasswordInput(attrs={'class': 'form-control col-lg-4 col-sm-6 col-8 justify-content-center'})
+        }
 
     def clean(self):
         if self.is_valid():
@@ -39,7 +44,7 @@ class MessageForm(forms.ModelForm):
         fields = ['title', 'tags', 'body']
 
         widgets = {
-            'title': forms.TextInput(attrs={'readonly': 'readonly'}),
-            'body': forms.Textarea(attrs={'class': 'form-control'}),
-            'tags': forms.SelectMultiple(attrs={'class': 'form-control'})
+            'title': forms.TextInput(attrs={'readonly': 'readonly', 'class': 'form-control'}),
+            'body': forms.Textarea(attrs={'class': 'form-control', 'rows': '5'}),
+            'tags': forms.SelectMultiple(attrs={'class': 'form-control col-lg-6 col-sm-6'})
         }

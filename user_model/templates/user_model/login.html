@@ -1,7 +1,8 @@
 {% extends 'user_model/base.html' %}
 
 {% block content %}
-    <h2>Login</h2>
+    <h2>Вход в систему:</h2>
+    <br>
 
     <form method="post">
         {% csrf_token %}
@@ -28,6 +29,6 @@
                 {{ login_form.non_field_errors }}
             </span>
         {% endif %}
-        <button type="submit">Log in</button>
+        <button type="submit" class="btn btn-primary" style="padding-left: 20px; padding-right: 20px">Log in</button>
     </form>
 {% endblock %}

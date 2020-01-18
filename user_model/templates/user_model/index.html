@@ -2,12 +2,14 @@
 
 {% block content %}
     <div class="row">
-        <div class="col">
+        <div class="col-lg-7">
             <!-- {% include 'user_model/includes/message_create.html' %} -->
         </div>
-        <div class="col"></div>
-        <div class="col">
-            {% include 'user_model/includes/messages_card_template.html' %}
+        <!-- <div class="col"></div> -->
+        <div class="col-lg-5">
+            <div class="message-template">
+                {% include 'user_model/includes/messages_card_template.html' %}
+            </div>
         </div>
     </div>
 

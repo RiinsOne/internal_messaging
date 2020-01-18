@@ -15,6 +15,10 @@ function getjson(json_url) {
                 msgTitleId = '#title-id' + i;
                 $(msgTitleId).html(msgTitle);
 
+                msgTime = data[i]['date_pub'];
+                msgTimeId = '#datepub-id' + i;
+                $(msgTimeId).html(msgTime);
+
                 var msgTags = [];
                 for (var j = 0; j < data[i].tags.length; j++) {
                     msgTag = data[i].tags[j]['title'];
@@ -37,7 +41,7 @@ function getjson(json_url) {
         }
     });
 };
-console.log(slugIdNE);
+// console.log(slugIdNE);
 
 // var json_url = 'http://127.0.0.1:8000/messages-dah/?format=json';
 
@@ -57,4 +61,4 @@ function count(num) {
     }, 3000);
 };
 
-setInterval(getjson, 5000);
+setInterval(getjson, 5000, json_url);
