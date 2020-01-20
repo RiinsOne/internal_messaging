@@ -1,0 +1,30 @@
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        DAH
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="{% url 'dah_messages_api' %}">Last 10 messages</a>
+        <a class="dropdown-item" href="{% url 'dah_messages_obj' %}">Last 50 messages</a>
+    </div>
+</li>
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        UTG
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="{% url 'utg_messages_api' %}">Last 10 messages</a>
+        <a class="dropdown-item" href="{% url 'utg_messages_obj' %}">Last 50 messages</a>
+    </div>
+</li>
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        S7
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="{% url 's7_messages_api' %}">Last 10 messages</a>
+        <a class="dropdown-item" href="{% url 's7_messages_obj' %}">Last 50 messages</a>
+    </div>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'create' %}">Create Message</a>
+</li>

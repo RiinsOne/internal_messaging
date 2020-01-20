@@ -25,7 +25,8 @@ from user_model.message_view import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', homepage, name='homepage'),
+    # path('', homepage, name='homepage'),
+    path('', main_page, name='homepage'),
     # path('', RedirectView.as_view(url='login/')),
     # path('main/', homepage, name='homepage'),
     # path('', IndexPage.as_view(), name='homepage'),
@@ -42,6 +43,9 @@ urlpatterns = [
     path('dah/messages-10/', DAHMessageApiView.as_view(), name='dah_messages_api'),
     path('utg/messages-10/', UTGMessageApiView.as_view(), name='utg_messages_api'),
     path('s7/messages-10/', S7MessageApiView.as_view(), name='s7_messages_api'),
+    path('dah/messages-50/', DAHMsgsView.as_view(), name='dah_messages_obj'),
+    path('utg/messages-50/', UTGMsgsView.as_view(), name='utg_messages_obj'),
+    path('s7/messages-50/', S7MsgsView.as_view(), name='s7_messages_obj'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

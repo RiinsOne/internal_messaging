@@ -35,6 +35,37 @@ def homepage(request):
     return render(request, 'user_model/index.html', context=context)
 
 
+@login_required
+def main_page(request):
+    context = {}
+    messages = Message.objects.all()[:50]
+    context['messages'] = messages
+    return render(request, 'user_model/main_page.html', context=context)
+
+
+class DAHMsgsView(LoginRequiredMixin, ObjectMsgsViewMixin, View):
+    template = 'user_model/dah_msgs_template.html'
+    tag_arg = 'DAH'
+
+
+class UTGMsgsView(LoginRequiredMixin, ObjectMsgsViewMixin, View):
+    template = 'user_model/utg_msgs_template.html'
+    tag_arg = 'UTG'
+
+
+class S7MsgsView(LoginRequiredMixin, ObjectMsgsViewMixin, View):
+    template = 'user_model/s7_msgs_template.html'
+    tag_arg = 'S7'
+
+
+# @login_required
+# def dah_msgs_view(request):
+#     context = {}
+#     dah_msgs = Message.objects.filter(tags__title='DAH')[:50]
+#     context['dah_msgs'] = dah_msgs
+#     return render(request, 'user_model/dah_msgs_template.html', context=context)
+
+
 # class IndexPage(ObjectCreateMessageMixin, View):
 #     form_model = MessageForm
 #     template = 'user_model/index.html'
@@ -108,7 +139,7 @@ def login_view(request):
 def messagecreate_view(request):
     hostname = gethostname()
     another_user = UserModel.objects.filter(username=request.user).first()
-    title_info = str(another_user).upper() + ', ' + str(another_user.entity).upper() + ', ' + str(hostname).upper()
+    title_info = str(another_user).upper() + ', ' + str(hostname).upper()
     current_user = str(request.user).upper()
 
     if request.POST:

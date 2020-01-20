@@ -20,9 +20,13 @@ class UserAutheticationForm(forms.ModelForm):
         model = UserModel
         fields = ('username', 'password')
 
+        # widgets = {
+        #     'username': forms.TextInput(attrs={'class': 'form-control col-lg-4 col-sm-6 col-8 justify-content-center'}),
+        #     'password': forms.PasswordInput(attrs={'class': 'form-control col-lg-4 col-sm-6 col-8 justify-content-center'})
+        # }
         widgets = {
-            'username': forms.TextInput(attrs={'class': 'form-control col-lg-4 col-sm-6 col-8 justify-content-center'}),
-            'password': forms.PasswordInput(attrs={'class': 'form-control col-lg-4 col-sm-6 col-8 justify-content-center'})
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'password': forms.PasswordInput(attrs={'class': 'form-control'})
         }
 
     def clean(self):

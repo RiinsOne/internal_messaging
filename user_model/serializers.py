@@ -9,7 +9,7 @@ class TagSerializer(serializers.ModelSerializer):
 
 
 class MessageSerializer(serializers.ModelSerializer):
-    date_pub = serializers.DateTimeField(format='%d.%m.%Y %H:%M:%S')
+    date_pub = serializers.DateTimeField(format='%H:%M:%S %d.%m.%Y')
     tags = TagSerializer(many=True, read_only=True)
 
     class Meta:

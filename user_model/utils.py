@@ -50,3 +50,21 @@ class ObjectMessagesApiMixin:
             return HttpResponseRedirect('')
         context={'form': bound_form}
         return render(request, self.template, context=context)
+
+
+# def dah_msgs_view(request):
+#     context = {}
+#     dah_msgs = Message.objects.filter(tags__title='DAH')[:50]
+#     context['dah_msgs'] = dah_msgs
+#     return render(request, 'user_model/dah_msgs_template.html', context=context)
+
+class ObjectMsgsViewMixin:
+    template = None
+    tag_arg = None
+
+    def get(self, request):
+        messages = Message.objects.filter(tags__title=self.tag_arg)[:50]
+        return render(request, self.template, context={'messages': messages})
+
+    def post(self, request):
+        pass

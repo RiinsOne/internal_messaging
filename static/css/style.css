@@ -10,9 +10,23 @@
     margin-right: 25px;
 }
 
+.login-template {
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+.message-mainpage-template {
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
 label {
     font-weight: 600;
 }
+
+/* .nav.navbar-nav.logout li a {
+    color: white;
+} */
 
 /* .card {
     border-radius: 10px !important;

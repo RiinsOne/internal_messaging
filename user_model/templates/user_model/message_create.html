@@ -1,29 +1,26 @@
 {% extends 'user_model/base.html' %}
 
 {% block content %}
-    <h2>Message Creation</h2>
+    <div class="row">
+        <div class="col-lg-7">
+            <div class="message-form">
+                <h2>Создать сообщение по рейсу:</h2>
+                <br>
+                <form method="post">
+                    {% csrf_token %}
 
-    <form method="post">
-        {% csrf_token %}
-
-        {% for field in message_form %}
-            <p>
-                {{ field.label_tag }}
-                {{ field }}
-
-                <!-- {% if field.help_text %}
-                    <small style="color: grey;">{{ field.help_text }}</small>
-                {% endif %}
-
-                {% for error in field.errors %}
-                    <small style="color: red;">{{ error }}</small>
-                {% endfor %} -->
-            </p>
-        {% endfor %}
-
-        <button type="submit">Create</button>
-    </form>
-
-    {{ list }}
+                    {% for field in message_form %}
+                    <p>
+                        {{ field.label_tag }}
+                        {{ field }}
+                    </p>
+                    {% endfor %}
+                    <br>
+                    <button type="submit" class="btn btn-primary" style="padding-left: 20px; padding-right: 20px">Отправить</button>
+                </form>
+                <br><br>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
