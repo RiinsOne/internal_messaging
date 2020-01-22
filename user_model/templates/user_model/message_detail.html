@@ -1,13 +1,25 @@
 {% extends 'user_model/base.html' %}
 
+{% load static %}
+
+{% block title %}
+    Message - {{ message.slug }}
+{% endblock %}
+
 {% block content %}
-    {{ message.title }} \\
-    {{ message.date_pub|date:'d M Y, H:i:s' }}
-    <br>
-    {% for tag in message.tags.all %}
-        {{ tag.title }}
-    {% endfor %}
-    <br>
-    <br>
-    {{ message.body|linebreaks }}
+    <div class="message-template" id="message-detail">
+        {{ message.title }}
+        <br>
+        {{ message.date_pub|date:'H:i:s, d M Y'}}
+        <br>
+        {% for tag in message.tags.all %}
+            {{ tag.title }}
+        {% endfor %}
+        <br><br>
+        {{ message.body|linebreaks }}
+        <br>
+        <!-- <button class="btn btn-success btn-sm" onclick="copyToClipboard('#message-detail')">Копировать</button> -->
+    </div>
+
+    <!-- <script src="{% static 'js/copymessage.js' %}" charset="utf-8"></script> -->
 {% endblock %}

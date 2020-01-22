@@ -1,5 +1,9 @@
 {% extends 'user_model/base.html' %}
 
+{% block title %}
+    Create user
+{% endblock %}
+
 {% block content %}
     {% if request.user.is_authenticated and request.user.is_admin %}
         <h2>User Creation</h2>

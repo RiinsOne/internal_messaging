@@ -14,10 +14,16 @@ class UserModelCreationForm(UserCreationForm):
 
 
 class UserAutheticationForm(forms.ModelForm):
+    # password = forms.CharField(label='Password', widget=forms.PasswordInput)
 
     class Meta:
         model = UserModel
         fields = ('username', 'password')
+
+        # widgets = {
+        #     'username': forms.TextInput(attrs={'class': 'form-control col-lg-4 col-sm-6 col-8 justify-content-center'}),
+        #     'password': forms.PasswordInput(attrs={'class': 'form-control col-lg-4 col-sm-6 col-8 justify-content-center'})
+        # }
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control'}),
             'password': forms.PasswordInput(attrs={'class': 'form-control'})
@@ -32,7 +38,11 @@ class UserAutheticationForm(forms.ModelForm):
 
 
 class MessageForm(forms.ModelForm):
-    
+    # tags = forms.ModelMultipleChoiceField(
+    #     queryset=Tag.objects.all(),
+    #     widget=forms.CheckboxSelectMultiple,
+    # )
+
     class Meta:
         model = Message
         fields = ['title', 'tags', 'body']

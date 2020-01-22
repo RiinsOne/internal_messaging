@@ -44,6 +44,7 @@ class UserModelManager(BaseUserManager):
 class UserModel(AbstractBaseUser):
     username = models.CharField(verbose_name='username', max_length=30, unique=True)
     fullname = models.CharField(verbose_name='full name', max_length=100)
+    # entity = models.CharField(verbose_name='entity', max_length=60, blank=True)
     role = models.ForeignKey('UserRole', on_delete=models.CASCADE, related_name='role', null=True)
 
     date_joined = models.DateTimeField(verbose_name='date joined', auto_now_add=True)
@@ -87,10 +88,14 @@ class UserRole(models.Model):
 def gen_slug():
     return str(int(time()))
 
+# def gen_strftime(date):
+#     return date.strftime("%d.%m.%Y %H:%M:%S")
+
 
 class Message(models.Model):
     title = models.CharField(max_length=150, db_index=True)
     slug = models.SlugField(max_length=150, unique=True)
+    # body = models.TextField(blank=True, db_index=True)
     body = models.TextField(db_index=True)
     tags = models.ManyToManyField('Tag', related_name='t_messages')
     users = models.ManyToManyField('UserModel', related_name='u_messages')
@@ -98,6 +103,8 @@ class Message(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = gen_slug()
+        # self.date_pub = gen_strftime(self.date_pub)
+        # self.date_pub = str(self.date_pub.datetime.strftime("%d.%m.%Y %H:%M:%S"))
         super().save(*args, **kwargs)
 
     def __str__(self):

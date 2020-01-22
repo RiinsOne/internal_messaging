@@ -46,3 +46,13 @@ class MessageListS7(LoginRequiredMixin, APIView):
 
     def post(self):
         pass
+
+
+class MessageListBHG(LoginRequiredMixin, APIView):
+    def get(self, request):
+        messages = Message.objects.filter(tags__title='BHG')[:20]
+        serializer = MessageSerializer(messages, many=True)
+        return Response(serializer.data)
+
+    def post(self):
+        pass

@@ -23,6 +23,7 @@ class ObjectCreateMessageMixin:
 
 
 class ObjectMessagesApiMixin:
+    # template = None
     template = 'user_model/ten_messages_api.html'
     db_model = UserModel
     form_model = MessageForm
@@ -33,6 +34,7 @@ class ObjectMessagesApiMixin:
         lst = range(10)
         slug_ne = self.db_msg.objects.filter(tags__title=self.tag_arg).first()
 
+        # msg_create_time = str(datetime.today().strftime("%d.%m.%Y %H:%M:%S"))
         hostname = gethostname()
         another_user = self.db_model.objects.filter(username=request.user).first()
         title_info = str(another_user).upper() + ', ' + str(hostname).upper()
@@ -50,7 +52,14 @@ class ObjectMessagesApiMixin:
         return render(request, self.template, context=context)
 
 
+# def dah_msgs_view(request):
+#     context = {}
+#     dah_msgs = Message.objects.filter(tags__title='DAH')[:50]
+#     context['dah_msgs'] = dah_msgs
+#     return render(request, 'user_model/dah_msgs_template.html', context=context)
+
 class ObjectMsgsViewMixin:
+    # template = None
     template = 'user_model/fifty_msgs_template.html'
     tag_arg = None
 

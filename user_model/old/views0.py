@@ -21,24 +21,67 @@ from .utils import *
 from socket import gethostname
 
 
+# @login_required(login_url='/login/')
+@login_required
+def homepage(request):
+    users = UserModel.objects.all()
+    messages = Message.objects.all()[0:30]
+    slug_ne = Message.objects.all().first()
+    tags = Tag.objects.all()
+    context = {'users': users, 'messages': messages, 'tags': tags}
+    lst = range(10)
+    context['list'] = lst
+    context['slug_ne'] = slug_ne
+    return render(request, 'user_model/index.html', context=context)
+
+
+# @login_required
+# def main_page(request):
+#     context = {}
+#     messages = Message.objects.all()[:50]
+#     context['messages'] = messages
+#     return render(request, 'user_model/main_page.html', context=context)
+
+
 class AllMsgsView(LoginRequiredMixin, ObjectMsgsViewMixin, View):
     tag_arg = None
 
 
 class DAHMsgsView(LoginRequiredMixin, ObjectMsgsViewMixin, View):
+    # template = 'user_model/dah_msgs_template.html'
     tag_arg = 'DAH'
 
 
 class UTGMsgsView(LoginRequiredMixin, ObjectMsgsViewMixin, View):
+    # template = 'user_model/utg_msgs_template.html'
     tag_arg = 'UTG'
 
 
 class S7MsgsView(LoginRequiredMixin, ObjectMsgsViewMixin, View):
+    # template = 'user_model/s7_msgs_template.html'
     tag_arg = 'S7'
 
 
 class BHGMsgsView(LoginRequiredMixin, ObjectMsgsViewMixin, View):
+    # template = 'user_model/bhg_msgs_template.html'
     tag_arg = 'BHG'
+
+
+# @login_required
+# def dah_msgs_view(request):
+#     context = {}
+#     dah_msgs = Message.objects.filter(tags__title='DAH')[:50]
+#     context['dah_msgs'] = dah_msgs
+#     return render(request, 'user_model/dah_msgs_template.html', context=context)
+
+
+# class IndexPage(ObjectCreateMessageMixin, View):
+#     form_model = MessageForm
+#     template = 'user_model/index.html'
+#     raise_exception = True
+
+    # another_user = UserModel.objects.filter(username=request.user).first()
+    # title_info = str(another_user).upper() + ' \\\ ' + str(another_user.entity).upper()
 
 
 @login_required
@@ -57,7 +100,7 @@ def usercreation_view(request):
             return redirect('homepage')
         else:
             context['usercreation_form'] = form
-    else:
+    else:  # GET request
         form = UserModelCreationForm()
         context['usercreation_form'] = form
         context['users'] = users
@@ -128,14 +171,17 @@ def message_detail(request, slug):
 
 
 class DAHMessageApiView(LoginRequiredMixin, ObjectMessagesApiMixin, View):
+    # template = 'user_model/dah_messages_api.html'
     tag_arg = 'DAH'
 
 
 class UTGMessageApiView(LoginRequiredMixin, ObjectMessagesApiMixin, View):
+    # template = 'user_model/utg_messages_api.html'
     tag_arg = 'UTG'
 
 
 class S7MessageApiView(LoginRequiredMixin, ObjectMessagesApiMixin, View):
+    # template = 'user_model/s7_messages_api.html'
     tag_arg = 'S7'
 
 

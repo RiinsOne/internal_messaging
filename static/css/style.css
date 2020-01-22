@@ -24,15 +24,23 @@ label {
     font-weight: 600;
 }
 
-/* .nav.navbar-nav.logout li a {
-    color: white;
+a.message-info-link {
+  color: #212529;
+  text-decoration: none;
+}
+
+a.message-info-link:hover {
+  color: #b27300;
+}
+
+/* a.message-info-link {
+  color: #b27300;
+  text-decoration: none;
+}
+
+a.message-info-link:hover {
+  color: #cc0000;
 } */
-
-/* .card {
-    border-radius: 10px !important;
-} */
-
-
 
 
 

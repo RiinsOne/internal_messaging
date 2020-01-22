@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.views.generic import RedirectView
+from django.urls import include
 
 from rest_framework.urlpatterns import format_suffix_patterns
 
@@ -25,11 +25,7 @@ from user_model.message_view import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('', homepage, name='homepage'),
-    path('', main_page, name='homepage'),
-    # path('', RedirectView.as_view(url='login/')),
-    # path('main/', homepage, name='homepage'),
-    # path('', IndexPage.as_view(), name='homepage'),
+    path('', AllMsgsView.as_view(), name='homepage'),
     path('usercreate/', usercreation_view, name='usercreate'),
     path('logout/', logout_view, name='logout'),
     path('login/', login_view, name='login'),
@@ -39,13 +35,15 @@ urlpatterns = [
     path('messages-dah/', MessageListDAH.as_view()),
     path('messages-utg/', MessageListUTG.as_view()),
     path('messages-s7/', MessageListS7.as_view()),
-    # path('dah/messages-10/', dah_messages_api_view, name='dah_messages_api'),
+    path('messages-bhg/', MessageListBHG.as_view()),
     path('dah/messages-10/', DAHMessageApiView.as_view(), name='dah_messages_api'),
     path('utg/messages-10/', UTGMessageApiView.as_view(), name='utg_messages_api'),
     path('s7/messages-10/', S7MessageApiView.as_view(), name='s7_messages_api'),
+    path('bhg/messages-10/', BHGMessageApiView.as_view(), name='bhg_messages_api'),
     path('dah/messages-50/', DAHMsgsView.as_view(), name='dah_messages_obj'),
     path('utg/messages-50/', UTGMsgsView.as_view(), name='utg_messages_obj'),
     path('s7/messages-50/', S7MsgsView.as_view(), name='s7_messages_obj'),
+    path('bhg/messages-50/', BHGMsgsView.as_view(), name='bhg_messages_obj'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
