@@ -3,42 +3,19 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 
-import json as simplejson
-from django.http import HttpResponse
-from django.http import JsonResponse
 from django.template import RequestContext, loader
 
 from django.views.generic import View
 
 from .models import UserModel, Message, Tag
 
-from .forms import UserModelCreationForm, UserAutheticationForm, MessageForm
+from .forms import UserModelCreationForm, UserAutheticationForm, MessageForm, DateRangeForm
 
 from django.conf import settings
 
 from .utils import *
 
 from socket import gethostname
-
-
-class AllMsgsView(LoginRequiredMixin, ObjectMsgsViewMixin, View):
-    tag_arg = None
-
-
-class DAHMsgsView(LoginRequiredMixin, ObjectMsgsViewMixin, View):
-    tag_arg = 'DAH'
-
-
-class UTGMsgsView(LoginRequiredMixin, ObjectMsgsViewMixin, View):
-    tag_arg = 'UTG'
-
-
-class S7MsgsView(LoginRequiredMixin, ObjectMsgsViewMixin, View):
-    tag_arg = 'S7'
-
-
-class BHGMsgsView(LoginRequiredMixin, ObjectMsgsViewMixin, View):
-    tag_arg = 'BHG'
 
 
 @login_required
@@ -121,6 +98,16 @@ def messagecreate_view(request):
     return render(request, 'user_model/message_create.html', context)
 
 
+def find_message_view(request):
+    context = {}
+    if request.POST:
+        form = DateRangeForm(request.POST)
+    else:
+        form = DateRangeForm()
+    context['form'] = form
+    return render(request, 'user_model/find_message.html', context=context)
+
+
 @login_required
 def message_detail(request, slug):
     message = Message.objects.get(slug__iexact=slug)
@@ -140,4 +127,27 @@ class S7MessageApiView(LoginRequiredMixin, ObjectMessagesApiMixin, View):
 
 
 class BHGMessageApiView(LoginRequiredMixin, ObjectMessagesApiMixin, View):
+    tag_arg = 'BHG'
+
+
+# --------------------------------------------------
+
+
+class AllMsgsView(LoginRequiredMixin, ObjectMsgsViewMixin, View):
+    tag_arg = None
+
+
+class DAHMsgsView(LoginRequiredMixin, ObjectMsgsViewMixin, View):
+    tag_arg = 'DAH'
+
+
+class UTGMsgsView(LoginRequiredMixin, ObjectMsgsViewMixin, View):
+    tag_arg = 'UTG'
+
+
+class S7MsgsView(LoginRequiredMixin, ObjectMsgsViewMixin, View):
+    tag_arg = 'S7'
+
+
+class BHGMsgsView(LoginRequiredMixin, ObjectMsgsViewMixin, View):
     tag_arg = 'BHG'

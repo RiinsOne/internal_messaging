@@ -44,6 +44,8 @@ urlpatterns = [
     path('utg/messages-50/', UTGMsgsView.as_view(), name='utg_messages_obj'),
     path('s7/messages-50/', S7MsgsView.as_view(), name='s7_messages_obj'),
     path('bhg/messages-50/', BHGMsgsView.as_view(), name='bhg_messages_obj'),
+
+    path('search/', find_message_view, name='find_message'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

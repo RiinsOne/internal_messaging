@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
 
+from tempus_dominus.widgets import DateTimePicker
+
 from .models import UserModel, Message, Tag
 
 
@@ -32,7 +34,7 @@ class UserAutheticationForm(forms.ModelForm):
 
 
 class MessageForm(forms.ModelForm):
-    
+
     class Meta:
         model = Message
         fields = ['title', 'tags', 'body']
@@ -41,4 +43,18 @@ class MessageForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'readonly': 'readonly', 'class': 'form-control'}),
             'body': forms.Textarea(attrs={'class': 'form-control', 'rows': '5'}),
             'tags': forms.SelectMultiple(attrs={'class': 'form-control col-lg-6 col-sm-6'})
+        }
+
+
+class DateRangeForm(forms.ModelForm):
+    start_date = forms.DateField(input_formats='%H:%M:%S %d.%m.%Y')
+    end_date = forms.DateField(input_formats='%H:%M:%S %d.%m.%Y')
+
+    class Meta:
+        model = Message
+        fields = ['start_date', 'end_date']
+
+        widgets = {
+            'start_date': forms.SelectDateWidget(),
+            'end_date': forms.SelectDateWidget(),
         }
