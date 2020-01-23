@@ -7,7 +7,7 @@ from django.views.generic import View
 from django.conf import settings
 
 from .models import UserModel, Message, Tag
-from .forms import UserModelCreationForm, UserAutheticationForm, MessageForm
+from .forms import UserModelCreationForm, UserAutheticationForm, MessageForm, DateRangeForm
 from .utils import *
 from .datetime_formatter import dt_formatter
 
@@ -94,7 +94,7 @@ def messagecreate_view(request):
     return render(request, 'user_model/message_create.html', context)
 
 
-def mainpage_view(request):
+def find_message_view(request):
     context = {}
 
     start_date = request.GET.get('start_date', '')
@@ -108,24 +108,37 @@ def mainpage_view(request):
             )
             context['messages'] = messages
         except:
-            allert = 'Введите корректные данные!'
-            context['allert'] = allert
+            error_message = 'Введите корректные данные'
+            context['error_message'] = error_message
         context['sd'] = start_date
         context['ed'] = end_date
     else:
-        warning = 'Для поиска нужно заполнить все поля формы.'
-        context['warning'] = warning
+        error_message = 'Заполните все поля'
+        context['error_message'] = error_message
 
-    return render(request, 'user_model/main_page.html', context=context)
+    return render(request, 'user_model/find_message.html', context=context)
+
+
+# def find_message_view(request):
+#     form = DateRangeForm()
+#     context = {}
+#     # search_query = request.GET.get('search', '')
+#     search_query = request.GET.get('date', '')
+#     if search_query:
+#         messages = Message.objects.filter(date_pub__gte=search_query)
+#         # messages = Message.objects.filter(body__icontains=search_query)
+#     else:
+#         messages = Message.objects.all()[:20]
+#     context['messages'] = messages
+#     context['form'] = form
+#     context['sq'] = search_query
+#     return render(request, 'user_model/find_message.html', context=context)
 
 
 @login_required
 def message_detail(request, slug):
     message = Message.objects.get(slug__iexact=slug)
     return render(request, 'user_model/message_detail.html', context={'message': message})
-
-
-# --------------------------------------------------
 
 
 class DAHMessageApiView(LoginRequiredMixin, ObjectMessagesApiMixin, View):
@@ -147,8 +160,8 @@ class BHGMessageApiView(LoginRequiredMixin, ObjectMessagesApiMixin, View):
 # --------------------------------------------------
 
 
-# class AllMsgsView(LoginRequiredMixin, ObjectMsgsViewMixin, View):
-#     tag_arg = None
+class AllMsgsView(LoginRequiredMixin, ObjectMsgsViewMixin, View):
+    tag_arg = None
 
 
 class DAHMsgsView(LoginRequiredMixin, ObjectMsgsViewMixin, View):

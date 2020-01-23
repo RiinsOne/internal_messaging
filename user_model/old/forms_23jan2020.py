@@ -42,3 +42,46 @@ class MessageForm(forms.ModelForm):
             'body': forms.Textarea(attrs={'class': 'form-control', 'rows': '5'}),
             'tags': forms.SelectMultiple(attrs={'class': 'form-control col-lg-6 col-sm-6'})
         }
+
+
+class DateRangeForm(forms.Form):
+    date = forms.DateTimeField(
+        input_formats=['%d.%m.%Y %H:%M:%S'],
+        widget=forms.DateTimeInput(
+            attrs={'class': 'form-control mr-sm-2', 'placeholder': 'type date here'}
+            # id="id_date" type="text", name="date"
+        )
+    )
+
+    # <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search">
+
+    # start_date = forms.DateTimeField(
+    #     input_formats=['%d/%m/%Y %H:%M'],
+    #     widget=forms.DateTimeInput(attrs={
+    #         'class': 'form-control datetimepicker-input',
+    #         'data-target': '#datetimepicker1'
+    #     })
+    # )
+    # end_date = forms.DateTimeField(
+    #     input_formats=['%d/%m/%Y %H:%M'],
+    #     widget=forms.DateTimeInput(attrs={
+    #         'class': 'form-control datetimepicker-input',
+    #         'data-target': '#datetimepicker1'
+    #     })
+    # )
+    # end_date = forms.DateTimeInput()
+
+    # start_date = forms.DateInput(input_formats='%d.%m.%Y %H:%M')
+    # end_date = forms.DateInput(input_formats='%d.%m.%Y %H:%M')
+    # body_contains = forms.TextInput()
+
+    # class Meta:
+    #     model = Message
+    #     fields = ['date_pub']
+        # fields = ['start_date', 'end_date']
+        #
+        # widgets = {
+        #     'start_date': forms.SelectDateWidget(),
+        #     'end_date': forms.SelectDateWidget(),
+        #     'body_contains': forms.TextInput(),
+        # }

@@ -1,9 +1,5 @@
 {% extends 'user_model/base.html' %}
 
-{% block title %}
-    Основная страница - поиск
-{% endblock %}
-
 {% block content %}
     <div class="row message-mainpage-template">
         <div class="col-lg-4 col-md-6">
@@ -11,41 +7,37 @@
                 <div class="form-group">
                     <label for="inputStartDate">Введите дату начала поиска</label>
                     <input type="text" class="form-control" id="inputStartDate" placeholder=" " name="start_date">
-                    <small class="form-text text-muted">Пример: 16.07.2020 18:30 или 16.07.2020</small>
+                    <small class="form-text text-muted">Пример: 18.07.2017 01:20</small>
                 </div>
                 <div class="form-group">
                     <label for="inputEndDate">Введите дату окончания поиска</label>
                     <input type="text" class="form-control" id="inputEndDate" placeholder=" " name="end_date">
-                    <small class="form-text text-muted">Пример: 18.07.2020 01:20 или 18.07.2020</small>
+                    <small class="form-text text-muted">Пример: 14.10.2017 18:30</small>
                 </div>
                 <button type="submit" class="btn btn-primary">Поиск</button>
             </form>
-            <br>
-            {% if allert %}
-                <div class="alert alert-danger" role="alert">{{ allert }}</div>
-            {% endif %}
-            {% if warning %}
-                <div style="padding-top: 0px; padding-bottom: 0px" class="alert alert-info" role="alert">{{ warning }}</div>
-            {% endif %}
-            <br>
         </div>
         <div class="col-lg-4 col-md-3"></div>
         <div class="col-lg-4 col-md-3"></div>
+        <!-- <div class="col-3"></div> -->
     </div>
 
+
     <div class="row">
-        <div class="col-md-8">
-            {% if messages %}
-                <div class="row message-mainpage-template">
-                    {{ sd }} - {{ ed }}
-                </div>
-                <div style="height: 10px;"></div>
-                {% for message in messages %}
-                    {% include 'user_model/includes/slug_message_template.html' %}
-                {% endfor %}
-            {% endif %}
-        </div>
+        <!-- <form class="form-inline my-2 my-lg-0" action="{% url 'find_message' %}">
+            <input class="form-control mr-sm-2" type="text" placeholder=" " aria-label="Search" name="start_date">
+            <input class="form-control mr-sm-2" type="text" placeholder=" " aria-label="Search" name="end_date">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
+        </form> -->
         <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <br>
+            {{ error_message }}
+            <br>
+            {% for message in messages %}
+                {% include 'user_model/includes/slug_message_template.html' %}
+            {% endfor %}
+        </div>
         <div class="col-md-2"></div>
     </div>
 {% endblock %}

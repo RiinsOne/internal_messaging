@@ -25,7 +25,8 @@ from user_model.message_view import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', AllMsgsView.as_view(), name='homepage'),
+    # path('', AllMsgsView.as_view(), name='homepage'),
+    path('', mainpage_view, name='homepage'),
     path('usercreate/', usercreation_view, name='usercreate'),
     path('logout/', logout_view, name='logout'),
     path('login/', login_view, name='login'),
@@ -45,7 +46,7 @@ urlpatterns = [
     path('s7/messages-50/', S7MsgsView.as_view(), name='s7_messages_obj'),
     path('bhg/messages-50/', BHGMsgsView.as_view(), name='bhg_messages_obj'),
 
-    path('search/', find_message_view, name='find_message'),
+    # path('search/', find_message_view, name='find_message'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
