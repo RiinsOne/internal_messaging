@@ -100,12 +100,35 @@ def messagecreate_view(request):
 
 def find_message_view(request):
     context = {}
-    if request.POST:
-        form = DateRangeForm(request.POST)
-    else:
-        form = DateRangeForm()
-    context['form'] = form
+
+    search_query = request.GET.get('search', '')
+
+    if search_query:
+        try:
+            messages = Message.objects.filter(date_pub__gte=search_query)
+            context['messages'] = messages
+        except:
+            error_message = 'error'
+            context['error_message'] = error_message
+        context['sq'] = search_query
+
     return render(request, 'user_model/find_message.html', context=context)
+
+
+# def find_message_view(request):
+#     form = DateRangeForm()
+#     context = {}
+#     # search_query = request.GET.get('search', '')
+#     search_query = request.GET.get('date', '')
+#     if search_query:
+#         messages = Message.objects.filter(date_pub__gte=search_query)
+#         # messages = Message.objects.filter(body__icontains=search_query)
+#     else:
+#         messages = Message.objects.all()[:20]
+#     context['messages'] = messages
+#     context['form'] = form
+#     context['sq'] = search_query
+#     return render(request, 'user_model/find_message.html', context=context)
 
 
 @login_required

@@ -146,8 +146,11 @@ LANGUAGE_CODE = 'en-us'
 #     '%d-%m-%Y'
 # ]
 
+# DATETIME_FORMAT = '%d.%m.%Y %H:%M:%S'
+
 # DATETIME_INPUT_FORMATS = [
-#     '%d-%m-%Y %H:%M:%S'
+#     '%d-%m-%Y %H:%M:%S',
+#     '%d.%m.%Y %H:%M:%S'
 # ]
 
 # TIME_FORMAT = 'H:i:s'
@@ -166,8 +169,8 @@ USE_L10N = False
 
 USE_TZ = True
 
-TEMPUS_DOMINUS_LOCALIZE = True
-TEMPUS_DOMINUS_INCLUDE_ASSETS = True
+# TEMPUS_DOMINUS_LOCALIZE = True
+# TEMPUS_DOMINUS_INCLUDE_ASSETS = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/

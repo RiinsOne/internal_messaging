@@ -6,6 +6,8 @@ from time import time
 from django.shortcuts import render
 from socket import gethostname
 
+from datetime import datetime
+
 
 class UserModelManager(BaseUserManager):
     def create_user(self, username, fullname, role, password=None):
@@ -88,6 +90,10 @@ def gen_slug():
     return str(int(time()))
 
 
+def get_now():
+    return datetime.now().strftime('%d.%m.%Y %H:%M:%S')
+
+
 class Message(models.Model):
     title = models.CharField(max_length=150, db_index=True)
     slug = models.SlugField(max_length=150, unique=True)
@@ -95,6 +101,7 @@ class Message(models.Model):
     tags = models.ManyToManyField('Tag', related_name='t_messages')
     users = models.ManyToManyField('UserModel', related_name='u_messages')
     date_pub = models.DateTimeField(auto_now_add=True)
+    # date_pub = models.DateTimeField(default=get_now)
 
     def save(self, *args, **kwargs):
         self.slug = gen_slug()

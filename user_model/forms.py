@@ -2,8 +2,6 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
 
-from tempus_dominus.widgets import DateTimePicker
-
 from .models import UserModel, Message, Tag
 
 
@@ -46,15 +44,44 @@ class MessageForm(forms.ModelForm):
         }
 
 
-class DateRangeForm(forms.ModelForm):
-    start_date = forms.DateField(input_formats='%H:%M:%S %d.%m.%Y')
-    end_date = forms.DateField(input_formats='%H:%M:%S %d.%m.%Y')
+class DateRangeForm(forms.Form):
+    date = forms.DateTimeField(
+        input_formats=['%d.%m.%Y %H:%M:%S'],
+        widget=forms.DateTimeInput(
+            attrs={'class': 'form-control mr-sm-2', 'placeholder': 'type date here'}
+            # id="id_date" type="text", name="date"
+        )
+    )
 
-    class Meta:
-        model = Message
-        fields = ['start_date', 'end_date']
+    # <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search">
 
-        widgets = {
-            'start_date': forms.SelectDateWidget(),
-            'end_date': forms.SelectDateWidget(),
-        }
+    # start_date = forms.DateTimeField(
+    #     input_formats=['%d/%m/%Y %H:%M'],
+    #     widget=forms.DateTimeInput(attrs={
+    #         'class': 'form-control datetimepicker-input',
+    #         'data-target': '#datetimepicker1'
+    #     })
+    # )
+    # end_date = forms.DateTimeField(
+    #     input_formats=['%d/%m/%Y %H:%M'],
+    #     widget=forms.DateTimeInput(attrs={
+    #         'class': 'form-control datetimepicker-input',
+    #         'data-target': '#datetimepicker1'
+    #     })
+    # )
+    # end_date = forms.DateTimeInput()
+
+    # start_date = forms.DateInput(input_formats='%d.%m.%Y %H:%M')
+    # end_date = forms.DateInput(input_formats='%d.%m.%Y %H:%M')
+    # body_contains = forms.TextInput()
+
+    # class Meta:
+    #     model = Message
+    #     fields = ['date_pub']
+        # fields = ['start_date', 'end_date']
+        #
+        # widgets = {
+        #     'start_date': forms.SelectDateWidget(),
+        #     'end_date': forms.SelectDateWidget(),
+        #     'body_contains': forms.TextInput(),
+        # }
