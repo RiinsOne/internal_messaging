@@ -1,3 +1,5 @@
+from datetime import datetime
+
 def dt_formatter(local_dt):
     local_dt.strip()
     temp_dt = local_dt.split()
@@ -14,3 +16,16 @@ def dt_formatter(local_dt):
     if time_part:
         return(f'{dj_date} {time_part}')
     return dj_date
+
+
+def q_delta(q_start, q_end):
+    epoch = datetime.utcfromtimestamp(0)
+    verify_delta = 172800.0
+    dt_start = datetime.strptime(q_start, '%d.%m.%Y %H:%M')
+    dt_end = datetime.strptime(q_end, '%d.%m.%Y %H:%M')
+    dt_start_s = (dt_start - epoch).total_seconds()
+    dt_end_s = (dt_end - epoch).total_seconds()
+    delta = dt_end_s - dt_start_s
+    if delta > verify_delta:
+        return False
+    return True

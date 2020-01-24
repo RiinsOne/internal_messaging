@@ -9,7 +9,7 @@ from django.conf import settings
 from .models import UserModel, Message, Tag
 from .forms import UserModelCreationForm, UserAutheticationForm, MessageForm
 from .utils import *
-from .datetime_formatter import dt_formatter
+from .datetime_formatter import dt_formatter, q_delta
 
 from socket import gethostname
 
@@ -94,6 +94,7 @@ def messagecreate_view(request):
     return render(request, 'user_model/message_create.html', context)
 
 
+@login_required
 def mainpage_view(request):
     context = {}
 
@@ -117,6 +118,36 @@ def mainpage_view(request):
         context['warning'] = warning
 
     return render(request, 'user_model/main_page.html', context=context)
+
+
+def find_message_view(request):
+    context = {}
+
+    start_date = request.GET.get('start_date', '')
+    end_date = request.GET.get('end_date', '')
+
+    if start_date == '' and end_date == '':
+        context['allert_info'] = 'Для поиска нужно заполнить все поля формы.'
+    elif start_date.upper().isupper() == True or end_date.upper().isupper() == True:
+        context['alpha_error'] = 'Поля не должны содержать буквы.'
+    elif start_date.upper().isupper() == False and end_date.upper().isupper() == False:
+        try:
+            if q_delta(start_date, end_date):
+                messages = Message.objects.filter(
+                    date_pub__gte=dt_formatter(start_date),
+                    date_pub__lte=dt_formatter(end_date)
+                )
+                context['messages'] = messages
+                context['sd'] = start_date
+                context['ed'] = end_date
+            else:
+                context['delta_error'] = 'Указанный период превышает двое суток!'
+        except:
+            context['type_error'] = 'Введен неправильный формат даты и времени!'
+    else:
+        pass
+
+    return render(request, 'user_model/find_message.html', context=context)
 
 
 @login_required

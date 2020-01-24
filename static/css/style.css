@@ -33,6 +33,11 @@ a.message-info-link:hover {
   color: #b27300;
 }
 
+.alert {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
 /* a.message-info-link {
   color: #b27300;
   text-decoration: none;
