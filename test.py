@@ -1,4 +1,5 @@
-from datetime import datetime
+from datetime import datetime, timedelta
+from random import randint, randrange, choice
 # 2020-1-22 00:01
 # 2020-01-01 00:01
 
@@ -68,7 +69,31 @@ def q_delta(q_start, q_end):
 #     print(verify_delta - q_delta)
 
 
-text1 = '10230193 19301.1231/123.131/231'
-text2 = 'asm m102i301 2k3 ,31231313'
-print(text1.upper().isupper())
-print(text2.upper().isupper())
+# text1 = '10230193 19301.1231/123.131/231'
+# text2 = 'asm m102i301 2k3 ,31231313'
+# print(text1.upper().isupper())
+# print(text2.upper().isupper())
+
+def randtime(start_hour, end_hour):
+    result = ''
+    r1 = randint(start_hour, end_hour)
+    if len(str(r1)) == 1:
+        result += '0' + str(r1) + ':'
+    else:
+        result += str(r1) + ':'
+
+    r2 = randrange(0, 60, 5)
+    if len(str(r2)) == 1:
+        result += '0' + str(r2)
+    else:
+        result += str(r2)
+    return result
+
+def randdate():
+    dates = []
+    for i in range(1, 8, 1):
+        date = datetime.now() - timedelta(days=i)
+        dates.append(date.strftime('%d.%m.%Y'))
+    return choice(dates)
+
+print(randdate())

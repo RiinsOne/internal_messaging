@@ -11,12 +11,12 @@
                 <div class="form-group">
                     <label for="inputStartDate">Введите дату начала поиска</label>
                     <input type="text" class="form-control" id="inputStartDate" placeholder=" " name="start_date">
-                    <small class="form-text text-muted">Пример: 16.07.2020 18:30.</small>
+                    <small class="form-text text-muted">Пример: {{ random_date }} {{ start_randtime }}</small>
                 </div>
                 <div class="form-group">
                     <label for="inputEndDate">Введите дату окончания поиска</label>
                     <input type="text" class="form-control" id="inputEndDate" placeholder=" " name="end_date">
-                    <small class="form-text text-muted">Пример: 18.07.2020 01:20.</small>
+                    <small class="form-text text-muted">Пример: {{ random_date }} {{ end_randtime }}</small>
                 </div>
                 <button style="padding-left: 20px; padding-right: 20px" type="submit" class="btn btn-primary btn-sm">Поиск</button>
             </form>
@@ -39,10 +39,12 @@
     </div>
     <div class="row">
         <div class="col-md-8">
-            {% for message in messages %}
+            {% if messages %}
                 <div class="row message-mainpage-template">
                     <h5>{{ sd }} - {{ ed }}</h5>
                 </div>
+            {% endif %}
+            {% for message in messages %}
                 <div style="height: 10px;"></div>
                 {% include 'user_model/includes/slug_message_template.html' %}
             {% endfor %}

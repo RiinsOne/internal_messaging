@@ -55,9 +55,13 @@ class ObjectMsgsViewMixin:
     tag_arg = None
 
     def get(self, request):
+        dah_backoffice = UserRole.objects.get(title='DAH-BACKOFFICE')
+        users_backoffice = UserModel.objects.filter(role=dah_backoffice)
+        
+
         if self.tag_arg is not None:
             messages = Message.objects.filter(tags__title=self.tag_arg)[:50]
-            return render(request, self.template, context={'messages': messages, 'block_title': self.tag_arg + ' last 50 messages'})
+            return render(request, self.template, context={'messages': messages, 'block_title': self.tag_arg + ' last 50 messages', 'users_backoffice': users_backoffice})
         messages = Message.objects.all()[:50]
         return render(request, 'user_model/main_page.html', context={'messages': messages})
 

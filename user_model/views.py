@@ -9,7 +9,8 @@ from django.conf import settings
 from .models import UserModel, Message, Tag
 from .forms import UserModelCreationForm, UserAutheticationForm, MessageForm
 from .utils import *
-from .datetime_formatter import dt_formatter, q_delta
+from .datetime_formatter import dt_formatter, q_delta, randtime, randdate
+from datetime import datetime, timedelta
 
 from socket import gethostname
 
@@ -122,6 +123,12 @@ def mainpage_view(request):
 
 def find_message_view(request):
     context = {}
+    random_date = randdate()
+    start_randtime = randtime(0, 11)
+    end_randtime = randtime(12, 24)
+    context['random_date'] = random_date
+    context['start_randtime'] = start_randtime
+    context['end_randtime'] = end_randtime
 
     start_date = request.GET.get('start_date', '')
     end_date = request.GET.get('end_date', '')
