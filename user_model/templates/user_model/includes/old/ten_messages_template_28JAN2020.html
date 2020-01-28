@@ -1,0 +1,22 @@
+{% load static %}
+
+{% for i in list %}
+    <div class="card mb-4 highlight-effect{{i}}">
+        <div class="card-body">
+            <h5 class="card-title mb-2" id="title-id{{i}}"></h5>
+            <h6 class="card-subtitle mb-2 text-muted" id="datepub-id{{i}}"></h6>
+            <h6 class="card-subtitle mb-2 text-muted" id="tags-id{{i}}"></h6>
+            <textarea readonly class="form-control" id="body-id{{i}}" rows="6" style="resize: none;">{{ slug_ne.slug }}</textarea>
+            <br>
+            <button class="btn btn-success btn-sm" onclick="copyToClipboard('#body-id{{i}}')">Копировать</button>
+        </div>
+    </div>
+{% endfor %}
+
+<script type="text/javascript">
+    var json_url = 'http://127.0.0.1:8000/messages-{{tag_arg|lower}}/?format=json';
+    console.log(json_url)
+</script>
+<script src="{% static 'js/getjson.js' %}" charset="utf-8"></script>
+
+<script src="{% static 'js/copymessage.js' %}" charset="utf-8"></script>

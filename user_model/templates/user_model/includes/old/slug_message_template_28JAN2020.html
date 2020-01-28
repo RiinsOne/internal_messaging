@@ -1,0 +1,29 @@
+{% load static %}
+
+<div class="message-mainpage-template">
+    <div class="card mb-4">
+        {% if message.get_username in users_backoffice %}
+            <div class="card-body" style="background-color: beige;">
+                <h5 class="card-title mb-2"><a class="message-info-link" href="{% url 'message_detail' slug=message.slug %}">{{ message.title }}</a></h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ message.date_pub|date:'H:i:s, d.m.Y'}}</h6>
+                <h6 class="card-subtitle mb-2 text-muted">
+                    {% for tag in message.tags.all %}
+                        {{ tag }}
+                    {% endfor %}
+                </h6>
+                <textarea readonly class="form-control" rows="6" style="resize: none;">{{ message.body|striptags }}</textarea>
+            </div>
+        {% else %}
+            <div class="card-body">
+                <h5 class="card-title mb-2"><a class="message-info-link" href="{% url 'message_detail' slug=message.slug %}">{{ message.title }}</a></h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ message.date_pub|date:'H:i:s, d.m.Y'}}</h6>
+                <h6 class="card-subtitle mb-2 text-muted">
+                    {% for tag in message.tags.all %}
+                        {{ tag }}
+                    {% endfor %}
+                </h6>
+                <textarea readonly class="form-control" rows="6" style="resize: none;">{{ message.body|striptags }}</textarea>
+            </div>
+        {% endif %}
+    </div>
+</div>

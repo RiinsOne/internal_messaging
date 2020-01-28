@@ -30,7 +30,7 @@ class ObjectMessagesApiMixin:
     tag_arg = None
 
     def get(self, request):
-        messages = Message.objects.filter(tags__title=self.tag_arg)[:10]
+        lst = range(10)
         slug_ne = self.db_msg.objects.filter(tags__title=self.tag_arg).first()
 
         hostname = gethostname()
@@ -44,7 +44,7 @@ class ObjectMessagesApiMixin:
             list_of_backoffice_users.append(user.__str__())
 
         form = self.form_model({'title': title_info})
-        context = {'slug_ne': slug_ne, 'form': form, 'tag_arg': self.tag_arg, 'block_title': self.tag_arg + ' last 10 messages', 'users_backoffice': list_of_backoffice_users, 'messages': messages}
+        context = {'list': lst, 'slug_ne': slug_ne, 'form': form, 'tag_arg': self.tag_arg, 'block_title': self.tag_arg + ' last 10 messages', 'users_backoffice': list_of_backoffice_users}
         return render(request, self.template, context=context)
 
     def post(self, request):

@@ -24,11 +24,12 @@ def usercreation_view(request):
         form = UserModelCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            account = authenticate(username=username, password=raw_password)
-            login(request, account)
-            return redirect('homepage')
+            # username = form.cleaned_data.get('username')
+            # raw_password = form.cleaned_data.get('password1')
+            # account = authenticate(username=username, password=raw_password)
+            # login(request, account)
+            # return redirect('')
+            return HttpResponseRedirect('')
         else:
             context['usercreation_form'] = form
     else:

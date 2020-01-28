@@ -11,6 +11,9 @@ function getjson(json_url) {
 
             for (var i = 0; i <= 9; i++) {
 
+                // mainCardId = '#main-card' + i;
+                // $(mainCardId).css('background-color', 'beige');
+
                 msgTitle = data[i]['title'];
                 msgTitleId = '#title-id' + i;
                 $(msgTitleId).html(msgTitle);
@@ -39,9 +42,13 @@ function getjson(json_url) {
                 };
 
             reWriteSlugIdNE(verifiedSlug);
+            // $('#main-card').css('background-color', 'beige');
         }
     });
 };
+// console.log(slugIdNE);
+
+// var json_url = 'http://127.0.0.1:8000/messages-dah/?format=json';
 
 getjson(json_url);
 

@@ -2,7 +2,7 @@
 
 {% for message in messages %}
     <div class="card mb-4 highlight-effect{{ forloop.counter0 }}">
-        <div class="card-paddings card-body">
+        <div class="card-paddings card-body" id="main-card{{ forloop.counter0 }}">
             <h5 class="card-title mb-2" id="title-id{{ forloop.counter0 }}"></h5>
             <h6 class="card-subtitle mb-2 text-muted" id="datepub-id{{ forloop.counter0 }}"></h6>
             <h6 class="card-subtitle mb-2 text-muted" id="tags-id{{ forloop.counter0 }}"></h6>

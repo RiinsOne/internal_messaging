@@ -110,6 +110,11 @@ class Message(models.Model):
     def __str__(self):
         return self.title + ', ' + self.date_pub.strftime("%d.%m.%Y %H:%M:%S")
 
+    def get_username(self):
+        temp_str = self.__str__()
+        temp_lst = temp_str.split(',')
+        return temp_lst[0].lower()
+
     class Meta:
         ordering = ['-date_pub']
 
