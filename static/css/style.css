@@ -1,3 +1,8 @@
+.margin-class {
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
 .message-form {
     margin-left: 25px;
     margin-right: 25px;
@@ -33,7 +38,7 @@ a.message-info-link:hover {
   color: #b27300;
 }
 
-.alert {
+.search-alert {
     padding-top: 0px;
     padding-bottom: 0px;
 }
@@ -43,6 +48,10 @@ a.message-info-link:hover {
     padding-bottom: 5px;
     padding-left: 10px;
     padding-right: 10px;
+}
+
+.message-form-search {
+    padding-left: 0px;
 }
 
 /* a.message-info-link {

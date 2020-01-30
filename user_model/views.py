@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.template import RequestContext, loader
 from django.views.generic import View
 from django.conf import settings
@@ -13,6 +14,14 @@ from .datetime_formatter import dt_formatter, q_delta, randtime, randdate
 from datetime import datetime, timedelta
 
 from socket import gethostname
+
+
+@login_required
+def active_users_view(request):
+    context = {}
+    active_users = UserModel.objects.filter(is_active=True)
+    context['active_users'] = active_users
+    return render(request, 'user_model/active_users.html', context)
 
 
 @login_required
@@ -29,7 +38,9 @@ def usercreation_view(request):
             # account = authenticate(username=username, password=raw_password)
             # login(request, account)
             # return redirect('')
-            return HttpResponseRedirect('')
+            messages.success(request, 'Account created successfully')
+            # return HttpResponseRedirect('')
+            return redirect('usercreate')
         else:
             context['usercreation_form'] = form
     else:
@@ -96,32 +107,33 @@ def messagecreate_view(request):
     return render(request, 'user_model/message_create.html', context)
 
 
+# @login_required
+# def mainpage_view(request):
+#     context = {}
+#
+#     start_date = request.GET.get('start_date', '')
+#     end_date = request.GET.get('end_date', '')
+#
+#     if start_date and end_date:
+#         try:
+#             _messages = Message.objects.filter(
+#                 date_pub__gte=dt_formatter(start_date),
+#                 date_pub__lte=dt_formatter(end_date)
+#             )
+#             context['messages'] = _messages
+#         except:
+#             allert = 'Введите корректные данные!'
+#             context['allert'] = allert
+#         context['sd'] = start_date
+#         context['ed'] = end_date
+#     else:
+#         warning = 'Для поиска нужно заполнить все поля формы.'
+#         context['warning'] = warning
+#
+#     return render(request, 'user_model/main_page.html', context=context)
+
+
 @login_required
-def mainpage_view(request):
-    context = {}
-
-    start_date = request.GET.get('start_date', '')
-    end_date = request.GET.get('end_date', '')
-
-    if start_date and end_date:
-        try:
-            messages = Message.objects.filter(
-                date_pub__gte=dt_formatter(start_date),
-                date_pub__lte=dt_formatter(end_date)
-            )
-            context['messages'] = messages
-        except:
-            allert = 'Введите корректные данные!'
-            context['allert'] = allert
-        context['sd'] = start_date
-        context['ed'] = end_date
-    else:
-        warning = 'Для поиска нужно заполнить все поля формы.'
-        context['warning'] = warning
-
-    return render(request, 'user_model/main_page.html', context=context)
-
-
 def find_message_view(request):
     context = {}
     random_date = randdate()
@@ -141,11 +153,11 @@ def find_message_view(request):
     elif start_date.upper().isupper() == False and end_date.upper().isupper() == False:
         try:
             if q_delta(start_date, end_date):
-                messages = Message.objects.filter(
+                _messages = Message.objects.filter(
                     date_pub__gte=dt_formatter(start_date),
                     date_pub__lte=dt_formatter(end_date)
                 )
-                context['messages'] = messages
+                context['messages'] = _messages
                 context['sd'] = start_date
                 context['ed'] = end_date
             else:
@@ -160,8 +172,34 @@ def find_message_view(request):
 
 @login_required
 def message_detail(request, slug):
-    message = Message.objects.get(slug__iexact=slug)
-    return render(request, 'user_model/message_detail.html', context={'message': message})
+    _message = Message.objects.get(slug__iexact=slug)
+    return render(request, 'user_model/message_detail.html', context={'message': _message})
+
+
+# @login_required
+# def user_update_view(request):
+#
+#     if not request.user.is_authenticated:
+#         return redirect('login')
+#
+#     context = {}
+#
+#     if request.POST:
+#         form = UserUpdateForm(request.POST, instance=request.user)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, 'Account updated successfully')
+#     else:
+#         form = UserUpdateForm(
+#             initial = {
+#                 'username': request.user.username,
+#                 'fullname': request.user.fullname,
+#             }
+#         )
+#     context['user_update_form'] = form
+#     return render(request, 'user_model/user_update_form.html', context)
+
+
 
 
 # --------------------------------------------------

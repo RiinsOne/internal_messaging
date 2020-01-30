@@ -6,21 +6,26 @@
 
 {% block content %}
     <div class="row">
+        <div class="col">
+            <div class="margin-class">
+                <h3>Обновить информацию пользователя:</h3>
+                {% if messages %}
+                    <div class="search-alert alert alert-success" role="alert">
+                        <h5>Данные обновлены!</h5>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div style="height: 20px;"></div>
+    <div class="row">
         <div class="col-lg-5 col-md-7">
             <div class="margin-class">
                 {% if request.user.is_authenticated and request.user.is_admin %}
-                    {% if messages %}
-                        <div class="search-alert alert alert-success" role="alert">
-                            <h5>Пользователь успешно создан!</h5>
-                        </div>
-                    {% endif %}
-                    <div style="height: 20px;"></div>
-                    <h3>Создать пользователя:</h3>
-                    <div style="height: 20px;"></div>
                     <form method="post">
                         {% csrf_token %}
 
-                        {% for field in usercreation_form %}
+                        {% for field in user_update_form %}
                         <p>
                             {{ field.label_tag }}
                             {{ field }}
@@ -34,6 +39,10 @@
                             {% endfor %}
                         </p>
                         {% endfor %}
+
+                        {% if user_update_form.non_fields_errors %}
+                            <small style="color: red;">{{ user_update_form.non_fields_errors }}</small>
+                        {% endif %}
 
                         <button type="submit" class="btn btn-primary" style="padding-left: 20px; padding-right: 20px">Create</button>
                     </form>

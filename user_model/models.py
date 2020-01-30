@@ -77,6 +77,7 @@ class UserModel(AbstractBaseUser):
     class Meta:
         verbose_name = 'User'
         verbose_name_plural = 'Users'
+        ordering = ['username']
 
 
 class UserRole(models.Model):

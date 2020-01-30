@@ -37,11 +37,22 @@ class ObjectMessagesApiMixin:
         another_user = self.db_model.objects.filter(username=request.user).first()
         title_info = str(another_user).upper() + ', ' + str(hostname).upper()
 
-        dah_backoffice = UserRole.objects.get(title='DAH-BACKOFFICE')
-        users_backoffice = UserModel.objects.filter(role=dah_backoffice)
+        # dah_backoffice = UserRole.objects.get(title='DAH-BACKOFFICE')
+        # dah_users_backoffice = UserModel.objects.filter(role=dah_backoffice)
+        #
+        # utg_backoffice = UserRole.objects.get(title='UTG-BACKOFFICE')
+        # utg_users_backoffice = UserModel.objects.filter(role=utg_backoffice)
+        #
+        # s7_backoffice = UserRole.objects.get(title='S7-BACKOFFICE')
+        # s7_users_backoffice = UserModel.objects.filter(role=s7_backoffice)
+        #
         list_of_backoffice_users = []
-        for user in users_backoffice:
-            list_of_backoffice_users.append(user.__str__())
+        # for user in dah_users_backoffice:
+        #     list_of_backoffice_users.append(user.__str__())
+        # for user in utg_users_backoffice:
+        #     list_of_backoffice_users.append(user.__str__())
+        # for user in s7_users_backoffice:
+        #     list_of_backoffice_users.append(user.__str__())
 
         form = self.form_model({'title': title_info})
         context = {'slug_ne': slug_ne, 'form': form, 'tag_arg': self.tag_arg, 'block_title': self.tag_arg + ' last 10 messages', 'users_backoffice': list_of_backoffice_users, 'messages': messages}
@@ -62,9 +73,20 @@ class ObjectMsgsViewMixin:
 
     def get(self, request):
         dah_backoffice = UserRole.objects.get(title='DAH-BACKOFFICE')
-        users_backoffice = UserModel.objects.filter(role=dah_backoffice)
+        dah_users_backoffice = UserModel.objects.filter(role=dah_backoffice)
+
+        utg_backoffice = UserRole.objects.get(title='UTG-BACKOFFICE')
+        utg_users_backoffice = UserModel.objects.filter(role=utg_backoffice)
+
+        s7_backoffice = UserRole.objects.get(title='S7-BACKOFFICE')
+        s7_users_backoffice = UserModel.objects.filter(role=s7_backoffice)
+
         list_of_backoffice_users = []
-        for user in users_backoffice:
+        for user in dah_users_backoffice:
+            list_of_backoffice_users.append(user.__str__())
+        for user in utg_users_backoffice:
+            list_of_backoffice_users.append(user.__str__())
+        for user in s7_users_backoffice:
             list_of_backoffice_users.append(user.__str__())
 
         if self.tag_arg is not None:

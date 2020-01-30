@@ -1,0 +1,82 @@
+{% extends 'user_model/base.html' %}
+
+{% block title %}
+    Search
+{% endblock %}
+
+{% block content %}
+    <div class="row message-mainpage-template">
+        <div class="col-lg-4 col-md-6">
+            <form method="GET">
+                <div class="form-group">
+                    <label for="inputStartDate">Введите дату начала поиска</label>
+                    <input type="text" class="form-control" id="inputStartDate" placeholder=" " name="start_date">
+                    <small class="form-text text-muted">Пример: {{ random_date }} {{ start_randtime }}</small>
+                </div>
+                <div class="form-group">
+                    <label for="inputEndDate">Введите дату окончания поиска</label>
+                    <input type="text" class="form-control" id="inputEndDate" placeholder=" " name="end_date">
+                    <small class="form-text text-muted">Пример: {{ random_date }} {{ end_randtime }}</small>
+                </div>
+                <button style="padding-left: 20px; padding-right: 20px" type="submit" class="btn btn-primary btn-sm">Поиск</button>
+            </form>
+            <br>
+            {% if type_error %}
+                <div class="alert alert-danger" role="alert">{{ type_error }}</div>
+            {% endif %}
+            {% if allert_info %}
+                <div class="alert alert-info" role="alert">{{ allert_info }}</div>
+            {% endif %}
+            {% if alpha_error %}
+                <div class="alert alert-danger" role="alert">{{ alpha_error }}</div>
+            {% endif %}
+            {% if delta_error %}
+                <div class="alert alert-warning" role="alert">{{ delta_error }}</div>
+            {% endif %}
+            <br>
+        </div>
+        <div class="col-lg-8 col-md-6"></div>
+    </div>
+    <div class="row">
+        <div class="message-mainpage-template">
+            <table class="table">
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Datetime</th>
+                    <th>Tags</th>
+                    <th>Body</th>
+                </tr>
+                {% for message in messages %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ message.title }}</td>
+                        <td>{{ message.date_pub|date:'H:i:s, d.m.Y' }}</td>
+                        <td>
+                            {% for tag in message.tags.all %}
+                                {{ tag }}
+                            {% endfor %}
+                        </td>
+                        <td>{{ message.body|striptags }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <br><br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            {% if messages %}
+                <div class="row message-mainpage-template">
+                    <h5>{{ sd }} - {{ ed }}</h5>
+                </div>
+            {% endif %}
+            {% for message in messages %}
+                <div style="height: 10px;"></div>
+                {% include 'user_model/includes/slug_message_template.html' %}
+            {% endfor %}
+        </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-2"></div>
+    </div>
+{% endblock %}

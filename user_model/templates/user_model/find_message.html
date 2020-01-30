@@ -5,16 +5,24 @@
 {% endblock %}
 
 {% block content %}
+    <div class="row">
+        <div class="col">
+            <div class="message-mainpage-template" style="padding-left: 15px; padding-right: 15px;">
+                <h5>Запрос по поиску не должен превышать двое суток.</h5>
+            </div>
+        </div>
+    </div>
+    <div style="height: 20px;"></div>
     <div class="row message-mainpage-template">
         <div class="col-lg-4 col-md-6">
             <form method="GET">
                 <div class="form-group">
-                    <label for="inputStartDate">Введите дату начала поиска</label>
+                    <label for="inputStartDate">Введите дату и время начала поиска</label>
                     <input type="text" class="form-control" id="inputStartDate" placeholder=" " name="start_date">
                     <small class="form-text text-muted">Пример: {{ random_date }} {{ start_randtime }}</small>
                 </div>
                 <div class="form-group">
-                    <label for="inputEndDate">Введите дату окончания поиска</label>
+                    <label for="inputEndDate">Введите дату и время окончания поиска</label>
                     <input type="text" class="form-control" id="inputEndDate" placeholder=" " name="end_date">
                     <small class="form-text text-muted">Пример: {{ random_date }} {{ end_randtime }}</small>
                 </div>
@@ -22,34 +30,52 @@
             </form>
             <br>
             {% if type_error %}
-                <div class="alert alert-danger" role="alert">{{ type_error }}</div>
+                <div class="search-alert alert alert-danger" role="alert">{{ type_error }}</div>
             {% endif %}
             {% if allert_info %}
-                <div class="alert alert-info" role="alert">{{ allert_info }}</div>
+                <div class="search-alert alert alert-info" role="alert">{{ allert_info }}</div>
             {% endif %}
             {% if alpha_error %}
-                <div class="alert alert-danger" role="alert">{{ alpha_error }}</div>
+                <div class="search-alert alert alert-danger" role="alert">{{ alpha_error }}</div>
             {% endif %}
             {% if delta_error %}
-                <div class="alert alert-warning" role="alert">{{ delta_error }}</div>
+                <div class="search-alert alert alert-warning" role="alert">{{ delta_error }}</div>
             {% endif %}
             <br>
         </div>
         <div class="col-lg-8 col-md-6"></div>
     </div>
     <div class="row">
-        <div class="col-md-8">
+        <div class="col">
             {% if messages %}
-                <div class="row message-mainpage-template">
+                <div class="message-mainpage-template" style="text-align: center;">
+                    <h4>Дата поиска:</h4>
                     <h5>{{ sd }} - {{ ed }}</h5>
                 </div>
+                <div style="height: 20px;"></div>
+                <table class="table" style="margin-left: 25px; margin-right: 25px;">
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Datetime</th>
+                        <th>Tags</th>
+                        <th>Body</th>
+                    </tr>
+                    {% for message in messages %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td><a class="message-info-link" href="{% url 'message_detail' slug=message.slug %}">{{ message.title }}</a></td>
+                        <td>{{ message.date_pub|date:'H:i:s, d.m.Y' }}</td>
+                        <td>
+                            {% for tag in message.tags.all %}
+                                {{ tag }}
+                            {% endfor %}
+                        </td>
+                        <td>{{ message.body|striptags }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
             {% endif %}
-            {% for message in messages %}
-                <div style="height: 10px;"></div>
-                {% include 'user_model/includes/slug_message_template.html' %}
-            {% endfor %}
         </div>
-        <div class="col-md-2"></div>
-        <div class="col-md-2"></div>
     </div>
 {% endblock %}

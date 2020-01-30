@@ -1,0 +1,53 @@
+{% extends 'user_model/base.html' %}
+
+{% block title %}
+    Список активных пользователей
+{% endblock %}
+
+username = models.CharField(verbose_name='username', max_length=30, unique=True)
+fullname = models.CharField(verbose_name='full name', max_length=100)
+role = models.ForeignKey('UserRole', on_delete=models.CASCADE, related_name='role', null=True)
+
+date_joined = models.DateTimeField(verbose_name='date joined', auto_now_add=True)
+last_login = models.DateTimeField(verbose_name='last login', auto_now=True)
+is_admin = models.BooleanField(default=False)
+is_active = models.BooleanField(default=True)
+is_staff = models.BooleanField(default=False)
+is_superuser = models.BooleanField(default=False)
+
+{% block content %}
+        <div class="row">
+            <div class="col">
+                {% if request.user.is_authenticated and request.user.is_admin %}
+                    <div class="message-mainpage-template" style="text-align: center;">
+                        <h4>Список незаблокированных учетных записей:</h4>
+                    </div>
+                    <div style="height: 20px;"></div>
+                    <table class="table" style="margin-left: 25px; margin-right: 25px;">
+                        <tr>
+                            <th>#</th>
+                            <th>Username</th>
+                            <th>Fullname</th>
+                            <th>Role</th>
+                            <th>Is active</th>
+                            <th>Last login</th>
+                        </tr>
+                        {% for user in active_users %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user.fullname }}</td>
+                                <td>{{ user.role }}</td>
+                                <td>{{ user.is_active }}</td>
+                                <td>{{ user.last_login|date:'d.m.Y, H:i:s' }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% else %}
+                    <div class="margin-class">
+                        <h2>Доступ запрещен!</h2>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+{% endblock %}
