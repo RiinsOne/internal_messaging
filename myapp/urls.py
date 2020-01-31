@@ -52,3 +52,12 @@ urlpatterns = [
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
+
+# default: "Django Administration"
+admin.site.site_header = 'Messages - Admin Panel'
+
+# default: "Site administration"
+admin.site.index_title = 'Applications'
+
+# default: "Django site admin"
+admin.site.site_title = 'Admin Panel'
